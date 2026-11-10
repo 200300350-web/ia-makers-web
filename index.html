@@ -33,28 +33,50 @@
 
     <!-- NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 transition-all">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center z-50 relative">
             
-            <!-- LOGO OFICIAL -->
+            <!-- LOGO OFICIAL (Ajustado para celular y PC) -->
             <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-80">
-                <img src="./logo.png" alt="IA MAKERS Logo" class="h-24 md:h-32 w-auto object-contain">
+                <img src="./logo.png" alt="IA MAKERS Logo" class="h-16 md:h-32 w-auto object-contain">
             </a>
 
-           <!-- MENÚ ACTUALIZADO -->
-            <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] text-zinc-500 items-center">
-                <a href="#hero" class="hover:text-white transition-colors">INICIO</a>
-                <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
-                <a href="#servicios" class="hover:text-white transition-colors">SERVICIOS</a>
-                <a href="#portafolio" class="hover:text-white transition-colors">PROYECTOS</a>
-                <a href="#tienda" class="hover:text-white transition-colors">TIENDA</a>
-                <a href="#contacto" class="hover:text-white transition-colors">CONTACTO</a>
+            <!-- ÍCONOS Y BOTONES (Siempre visibles) -->
+            <div class="flex items-center gap-6">
+                <!-- MENÚ DESKTOP -->
+                <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] text-zinc-500 items-center">
+                    <a href="#hero" class="hover:text-white transition-colors">INICIO</a>
+                    <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
+                    <a href="#servicios" class="hover:text-white transition-colors">SERVICIOS</a>
+                    <a href="#portafolio" class="hover:text-white transition-colors">PROYECTOS</a>
+                    <a href="#tienda" class="hover:text-white transition-colors">TIENDA</a>
+                    <a href="#contacto" class="hover:text-white transition-colors">CONTACTO</a>
+                </div>
+
                 <!-- Icono de Carrito -->
-                <button onclick="toggleCart()" class="text-white hover:text-cyan-400 transition-colors relative ml-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <button onclick="toggleCart()" class="text-white hover:text-cyan-400 transition-colors relative">
+                    <svg class="w-6 h-6 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
                 </button>
+
+                <!-- Menú Hamburguesa Móvil -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-cyan-400 transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
-        </div> <!-- FALTABA ESTE CIERRE -->
+        </div>
+
+        <!-- PANEL MENÚ MÓVIL (Pantalla completa oscura) -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#0a0a0a]/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-center items-center gap-8 md:hidden">
+            <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-white hover:text-cyan-400 transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <a href="#hero" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">INICIO</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">NOSOTROS</a>
+            <a href="#servicios" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">SERVICIOS</a>
+            <a href="#portafolio" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">PROYECTOS</a>
+            <a href="#tienda" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">TIENDA</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">CONTACTO</a>
+        </div>
     </nav>
 
     <!-- ACRÍLICO FLOTANTE 3D -->
@@ -448,7 +470,10 @@
                 sidebar.classList.toggle('translate-x-full');
             }
         }
-
+function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('translate-x-full');
+    }
         function sendCartToWhatsApp() {
             if (cart.length === 0) return;
             
