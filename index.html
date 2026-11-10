@@ -243,34 +243,24 @@
                             <input type="text" id="cliente-nombre" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 transition-colors font-light" placeholder="Ej. Diego Rodríguez">
                         </div>
 
-                        <!-- Selección de Servicio (Radio Buttons ocultos con diseño de Pill) -->
-                        <div>
-                            <label class="text-zinc-400 text-sm font-light mb-3 block">¿Qué servicio te interesa?</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <!-- Opción PWA -->
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="servicio" value="Desarrollo PWA" class="peer sr-only" required>
-                                    <div class="text-center px-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 peer-checked:bg-white peer-checked:text-black peer-checked:border-white peer-hover:border-zinc-600 transition-all font-medium text-sm">
-                                        Ecosistema PWA
+  <!-- Selección de Servicio -->
+                                <div>
+                                    <label for="servicio" class="block text-xs font-bold tracking-widest text-zinc-500 uppercase mb-2">Servicio de interés</label>
+                                    <div class="relative">
+                                        <select id="servicio" required class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-white/50 transition-all appearance-none text-sm">
+                                            <option value="" disabled selected>Selecciona una opción</option>
+                                            <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
+                                            <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+                                            <option value="Automatización">Automatización</option>
+                                            <option value="Acrílicos NFC / QR">Acrílicos NFC / QR</option>
+                                            <option value="Streetwear & Custom">Streetwear & Custom</option>
+                                            <option value="Otro">Otro</option>
+                                        </select>
+                                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
                                     </div>
-                                </label>
-                                <!-- Opción Acrílico -->
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="servicio" value="Acrílico Inteligente NFC/QR" class="peer sr-only">
-                                    <div class="text-center px-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 peer-checked:bg-white peer-checked:text-black peer-checked:border-white peer-hover:border-zinc-600 transition-all font-medium text-sm">
-                                        Acrílico NFC/QR
-                                    </div>
-                                </label>
-                                <!-- Opción Streetwear -->
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="servicio" value="Streetwear y Estampado" class="peer sr-only">
-                                    <div class="text-center px-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 peer-checked:bg-white peer-checked:text-black peer-checked:border-white peer-hover:border-zinc-600 transition-all font-medium text-sm">
-                                        Streetwear Textil
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
+                                </div>
                         <!-- Detalles -->
                         <div>
                             <label class="text-zinc-400 text-sm font-light mb-3 block">Cuéntanos un poco sobre tu idea</label>
