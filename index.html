@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA MAKERS | Tecnología & Manufactura</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            perspective: 1000px; 
+        }
+        ::-webkit-scrollbar { width: 0px; }
+
+        /* CLASES DE ANIMACIÓN CORE */
+        .reveal {
+            opacity: 0;
+            /* Inicia un poco abajo y ligeramente encogido */
+            transform: translateY(40px) scale(0.98); 
+            /* Curva bezier para que empiece rápido y termine súper suave (Estilo Premium) */
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-white antialiased overflow-hidden tracking-tight">
+
+    <!-- NAVEGACIÓN -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 transition-all">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            
+            <!-- LOGO OFICIAL (Sin texto extra) -->
+            <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-80">
+                <img src="./logo.png" alt="IA MAKERS Logo" class="h-24 md:h-32 w-auto object-contain">
+            </a>
+
+            <!-- MENÚ ACTUAL -->
+            <div class="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] text-zinc-500">
+                <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
+                <a href="#servicios" class="hover:text-white transition-colors">PILARES</a>
+                <a href="#portafolio" class="hover:text-white transition-colors">SOFTWARE</a>
+                <a href="#hardware" class="hover:text-white transition-colors">HARDWARE</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ACRÍLICO FLOTANTE 3D -->
+    <div id="acrylic-card" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-80 h-96 bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl z-0 pointer-events-none shadow-[0_0_50px_rgba(255,255,255,0.03)] transition-transform duration-300 ease-out flex items-center justify-center">
+        <div class="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center bg-black/40">
+            <svg class="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR SCROLL MAGNÉTICO -->
+    <main id="scroll-container" class="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="snap-start h-screen w-full flex flex-col justify-center px-6 relative z-10 bg-transparent pointer-events-none">
+            <div class="max-w-5xl mx-auto text-center pointer-events-auto mt-20">
+                <!-- Se agrega clase "reveal" -->
+                <h1 class="reveal text-6xl md:text-[6rem] font-medium tracking-tighter leading-none mb-8 drop-shadow-2xl">
+                    Piensa diferente. <br>
+                    <span class="text-zinc-600">Construye inteligente.</span>
+                </h1>
+                <!-- Retraso en la animación para que entre después del título -->
+                <div class="reveal flex justify-center mt-12" style="transition-delay: 200ms;">
+                    <a href="#about" class="text-xs font-bold tracking-widest text-zinc-500 hover:text-white transition-colors uppercase flex flex-col items-center gap-2">
+                        <span>Descubre más</span>
+                        <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT ME / FILOSOFÍA -->
+        <section id="about" class="snap-start h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-transparent pointer-events-none">
+            <div class="max-w-7xl mx-auto w-full h-full flex flex-col justify-between pointer-events-auto">
+                <div class="mt-20 md:mt-10 reveal">
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase mb-8 block">Sobre Nosotros</span>
+                    <p class="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight max-w-4xl">
+                        Somos un equipo innovador, en el cual siempre buscamos resolver áreas de oportunidad en cualquier sector.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-end border-t border-zinc-800/50 pt-10 pb-10">
+                    <div class="reveal w-full text-center md:text-left mb-8 md:mb-0" style="transition-delay: 100ms;">
+                        <div class="text-7xl md:text-[9rem] font-light tracking-tighter text-white leading-none">2</div>
+                        <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">AÑOS DE EXPERIENCIA</div>
+                    </div>
+                    <div class="reveal w-full text-center md:text-left mb-8 md:mb-0" style="transition-delay: 250ms;">
+                        <div class="text-7xl md:text-[9rem] font-light tracking-tighter text-white leading-none">4</div>
+                        <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">PROYECTOS</div>
+                    </div>
+                    <div class="reveal w-full text-center md:text-left" style="transition-delay: 400ms;">
+                        <div class="text-7xl md:text-[9rem] font-light tracking-tighter text-white leading-none">3</div>
+                        <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">CERTIFICADOS</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PILARES / WHAT WE DO -->
+        <section id="servicios" class="snap-start min-h-screen w-full flex flex-col justify-center py-32 px-6 relative z-10 bg-black">
+            <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-16">
+                <div class="reveal w-full md:w-1/3">
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12">Nuestros Pilares</span>
+                </div>
+                
+                <div class="w-full md:w-2/3 flex flex-col gap-24">
+                    <div class="reveal group" style="transition-delay: 100ms;">
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Desarrollo Web & PWA</h3>
+                        <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
+                            Aplicaciones web progresivas y arquitecturas digitales diseñadas para escalar con consistencia en cualquier dispositivo.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">JavaScript</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Vercel</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Tailwind</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">UI/UX</span>
+                        </div>
+                    </div>
+
+                    <div class="reveal group" style="transition-delay: 200ms;">
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Smart Tags</h3>
+                        <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
+                            Letreros de reseñas y tarjetas de presentación inteligentes. Hardware táctil para conectar el espacio físico con tus plataformas.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">NFC</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">QR</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Acrílico</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Configuración</span>
+                        </div>
+                    </div>
+
+                    <div class="reveal group" style="transition-delay: 300ms;">
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Streetwear Custom</h3>
+                        <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
+                            Diseño y fabricación de uniformes y prendas personalizadas. Aplicamos estampado DTF, vinil textil e impresión láser de alta calidad para tu marca.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Diseño</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Marca</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Estilo</span>
+                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Moda</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PORTAFOLIO PWA -->
+        <section id="portafolio" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-[#050505]">
+            <div class="max-w-7xl mx-auto w-full">
+                <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12 text-center md:text-left">Ecosistema PWA</span>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-10 md:p-14 h-[32rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 100ms;">
+                        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-cyan-900/10 to-transparent pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">Logística & IA</span>
+                            <h3 class="text-4xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">FleetGuard AI</h3>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-zinc-400 font-light text-lg mb-6 max-w-md">Ecosistema corporativo con chatbot integrado para diagnóstico automotriz y gestión de flotillas.</p>
+                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">Ver Proyecto</button>
+                        </div>
+                    </div>
+
+                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-10 md:p-14 h-[32rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 300ms;">
+                        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-900/10 to-transparent pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">Hospitality</span>
+                            <h3 class="text-4xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">Wellness Guide</h3>
+                        </div>
+                        <div class="relative z-10">
+                            <p class="text-zinc-400 font-light text-lg mb-6 max-w-md">Interfaz progresiva diseñada para hotelería premium, optimizando el servicio de alimentos y bienestar.</p>
+                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">Ver Proyecto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. HARDWARE -->
+        <section id="hardware" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-black">
+            <div class="max-w-6xl mx-auto w-full">
+                <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12">Productos Inteligentes</span>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[minmax(300px,auto)]">
+                    <div class="reveal md:col-span-2 bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-10 md:p-12 flex flex-col justify-between hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 100ms;">
+                        <div>
+                            <span class="inline-block px-4 py-1.5 bg-white text-black text-[10px] font-bold tracking-widest rounded-full w-max mb-6">NFC TAG</span>
+                            <h3 class="text-3xl md:text-4xl font-medium tracking-tighter text-white mb-4">Acrílico Personalizado</h3>
+                            <p class="text-zinc-500 font-light max-w-md text-base">Letrero de reseñas a la medida con integración de chip NFC oculto y código QR. Acabado premium.</p>
+                        </div>
+                        <div class="mt-16 flex items-end justify-between">
+                            <div>
+                                <span class="text-5xl font-light tracking-tighter text-white">$400</span>
+                                <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
+                            </div>
+                            <button class="bg-zinc-900 text-white border border-zinc-700 hover:bg-white hover:text-black px-8 py-3 rounded-full text-sm font-medium transition-all duration-300">Encargar</button>
+                        </div>
+                    </div>
+
+                    <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-10 md:p-12 flex flex-col justify-between hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 300ms;">
+                        <div>
+                            <span class="inline-block px-4 py-1.5 bg-zinc-900 text-zinc-300 border border-zinc-800 text-[10px] font-bold tracking-widest rounded-full w-max mb-6">EXPRESS</span>
+                            <h3 class="text-2xl font-medium tracking-tighter text-white mb-4">Acrílico QR</h3>
+                            <p class="text-zinc-500 font-light text-base">Base de acrílico con código QR directo.</p>
+                        </div>
+                        <div class="mt-16 flex items-end justify-between">
+                            <div>
+                                <span class="text-4xl font-light tracking-tighter text-white">$300</span>
+                                <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 6. CONTACTO / COTIZACIÓN (WhatsApp) -->
+        <section id="contacto" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-black">
+            <div class="max-w-4xl mx-auto w-full">
+                <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-8 text-center md:text-left">Inicia tu proyecto</span>
+                <h2 class="reveal text-4xl md:text-6xl font-medium tracking-tighter text-white mb-12 text-center md:text-left" style="transition-delay: 100ms;">Cotiza con nosotros.</h2>
+                
+                <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 hover:border-white/20 transition-all duration-500" style="transition-delay: 200ms;">
+                    <form id="whatsapp-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); enviarWhatsApp();">
+                        
+                        <!-- Nombre -->
+                        <div>
+                            <label class="text-zinc-400 text-sm font-light mb-3 block">¿Cómo te llamas?</label>
+                            <input type="text" id="cliente-nombre" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 transition-colors font-light" placeholder="Ej. Diego Rodríguez">
+                        </div>
+
+                        <!-- Selección de Servicio (Radio Buttons ocultos con diseño de Pill) -->
+                        <div>
+                            <label class="text-zinc-400 text-sm font-light mb-3 block">¿Qué servicio te interesa?</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <!-- Opción PWA -->
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="servicio" value="Desarrollo PWA" class="peer sr-only" required>
+                                    <div class="text-center px-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 peer-checked:bg-white peer-checked:text-black peer-checked:border-white peer-hover:border-zinc-600 transition-all font-medium text-sm">
+                                        Ecosistema PWA
+                                    </div>
+                                </label>
+                                <!-- Opción Acrílico -->
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="servicio" value="Acrílico Inteligente NFC/QR" class="peer sr-only">
+                                    <div class="text-center px-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 peer-checked:bg-white peer-checked:text-black peer-checked:border-white peer-hover:border-zinc-600 transition-all font-medium text-sm">
+                                        Acrílico NFC/QR
+                                    </div>
+                                </label>
+                                <!-- Opción Streetwear -->
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="servicio" value="Streetwear y Estampado" class="peer sr-only">
+                                    <div class="text-center px-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 peer-checked:bg-white peer-checked:text-black peer-checked:border-white peer-hover:border-zinc-600 transition-all font-medium text-sm">
+                                        Streetwear Textil
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Detalles -->
+                        <div>
+                            <label class="text-zinc-400 text-sm font-light mb-3 block">Cuéntanos un poco sobre tu idea</label>
+                            <textarea id="cliente-detalles" rows="3" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 transition-colors font-light resize-none" placeholder="Quiero un menú digital para mi restaurante..."></textarea>
+                        </div>
+
+                        <!-- Botón Enviar -->
+                        <div class="mt-4 flex justify-end">
+                            <button type="submit" class="bg-white text-black px-8 py-4 rounded-full text-sm font-bold hover:bg-zinc-200 transition-all duration-300 w-full md:w-auto shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
+                                <span>Enviar mensaje a WhatsApp</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SCRIPT GENERAL: Acrílico 3D + Intersection Observer -->
+    <script>
+        const scrollContainer = document.getElementById('scroll-container');
+        const acrylicCard = document.getElementById('acrylic-card');
+
+        // 1. ROTACIÓN DEL ACRÍLICO AL HACER SCROLL
+        scrollContainer.addEventListener('scroll', () => {
+            const scrollTop = scrollContainer.scrollTop;
+            const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+            if (maxScroll <= 0) return; 
+
+            const scrollProgress = scrollTop / maxScroll;
+            const rotX = scrollProgress * 180; 
+            const rotY = scrollProgress * 360; 
+            const moveY = (scrollProgress - 0.5) * 150; 
+
+            acrylicCard.style.transform = `translate(-50%, calc(-50% + ${moveY}px)) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        });
+
+        // 2. OBSERVADOR DE INTERSECCIÓN (Animaciones Reveal)
+        const observerOptions = {
+            root: scrollContainer,
+            rootMargin: '0px',
+            threshold: 0.15 // Se activa cuando el 15% del elemento es visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    // Quitamos la clase para que se vuelva a animar si el usuario sube y baja (efecto wow constante)
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        // Buscar todo lo que tenga la clase 'reveal' y observarlo
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 3. LÓGICA PARA ENVIAR A WHATSAPP
+        function enviarWhatsApp() {
+            // 1. Obtener los valores del formulario
+            const nombre = document.getElementById('cliente-nombre').value;
+            const detalles = document.getElementById('cliente-detalles').value;
+            
+            // Buscar cuál de las opciones de servicio seleccionó
+            const opcionesServicio = document.getElementsByName('servicio');
+            let servicioSeleccionado = '';
+            for (let opcion of opcionesServicio) {
+                if (opcion.checked) {
+                    servicioSeleccionado = opcion.value;
+                    break;
+                }
+            }
+
+            // 2. Construir el mensaje
+            // Usamos %0A para los saltos de línea en WhatsApp
+            const mensaje = `Hola IA MAKERS, soy *${nombre}*.%0A%0AMe interesa cotizar:%0A*${servicioSeleccionado}*%0A%0ADetalles del proyecto:%0A_${detalles}_`;
+
+            // 3. Tu número de teléfono (Cambia los 0 por tu número real de Cancún a 10 dígitos)
+            // IMPORTANTE: Pon tu número con código de país (52 para México). Ej: 529981234567
+            const telefonoIA = "529982145011"; 
+
+            // 4. Crear el enlace de WhatsApp y abrirlo
+            const urlWhatsApp = `https://wa.me/${telefonoIA}?text=${mensaje}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+</body>
+</html>
