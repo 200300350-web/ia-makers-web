@@ -20,9 +20,7 @@
         /* CLASES DE ANIMACIÓN CORE */
         .reveal {
             opacity: 0;
-            /* Inicia un poco abajo y ligeramente encogido */
             transform: translateY(40px) scale(0.98); 
-            /* Curva bezier para que empiece rápido y termine súper suave (Estilo Premium) */
             transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
@@ -37,19 +35,26 @@
     <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 transition-all">
         <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
             
-            <!-- LOGO OFICIAL (Sin texto extra) -->
+            <!-- LOGO OFICIAL -->
             <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-80">
                 <img src="./logo.png" alt="IA MAKERS Logo" class="h-24 md:h-32 w-auto object-contain">
             </a>
 
-            <!-- MENÚ ACTUAL -->
-            <div class="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] text-zinc-500">
+           <!-- MENÚ ACTUALIZADO -->
+            <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] text-zinc-500 items-center">
+                <a href="#hero" class="hover:text-white transition-colors">INICIO</a>
                 <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
-                <a href="#servicios" class="hover:text-white transition-colors">PILARES</a>
-                <a href="#portafolio" class="hover:text-white transition-colors">SOFTWARE</a>
-                <a href="#hardware" class="hover:text-white transition-colors">HARDWARE</a>
+                <a href="#servicios" class="hover:text-white transition-colors">SERVICIOS</a>
+                <a href="#portafolio" class="hover:text-white transition-colors">PROYECTOS</a>
+                <a href="#tienda" class="hover:text-white transition-colors">TIENDA</a>
+                <a href="#contacto" class="hover:text-white transition-colors">CONTACTO</a>
+                <!-- Icono de Carrito -->
+                <button onclick="toggleCart()" class="text-white hover:text-cyan-400 transition-colors relative ml-4">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+                </button>
             </div>
-        </div>
+        </div> <!-- FALTABA ESTE CIERRE -->
     </nav>
 
     <!-- ACRÍLICO FLOTANTE 3D -->
@@ -59,18 +64,41 @@
         </div>
     </div>
 
+    <!-- PANEL LATERAL DEL CARRITO -->
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-zinc-800/80 shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-6 border-b border-zinc-800/80 flex justify-between items-center mt-20 md:mt-0">
+            <h2 class="text-xl font-medium text-white tracking-tighter">Tu Pedido</h2>
+            <button onclick="toggleCart()" class="text-zinc-400 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
+            <!-- Los items del carrito se inyectan aquí con JS -->
+        </div>
+
+        <div class="p-6 border-t border-zinc-800/80 bg-[#050505]">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-zinc-400 text-sm font-light">Subtotal</span>
+                <span id="cart-total" class="text-2xl font-light text-white">$0 <span class="text-sm text-zinc-600 font-bold">MXN</span></span>
+            </div>
+            <button onclick="sendCartToWhatsApp()" class="w-full bg-white text-black py-4 rounded-xl text-sm font-bold hover:bg-zinc-200 transition-all flex justify-center items-center gap-2">
+                <span>Continuar compra por WhatsApp</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+    </div>
+
     <!-- CONTENEDOR SCROLL MAGNÉTICO -->
     <main id="scroll-container" class="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
 
         <!-- 1. HERO SECTION -->
         <section id="hero" class="snap-start h-screen w-full flex flex-col justify-center px-6 relative z-10 bg-transparent pointer-events-none">
             <div class="max-w-5xl mx-auto text-center pointer-events-auto mt-20">
-                <!-- Se agrega clase "reveal" -->
                 <h1 class="reveal text-6xl md:text-[6rem] font-medium tracking-tighter leading-none mb-8 drop-shadow-2xl">
                     Piensa diferente. <br>
                     <span class="text-zinc-600">Construye inteligente.</span>
                 </h1>
-                <!-- Retraso en la animación para que entre después del título -->
                 <div class="reveal flex justify-center mt-12" style="transition-delay: 200ms;">
                     <a href="#about" class="text-xs font-bold tracking-widest text-zinc-500 hover:text-white transition-colors uppercase flex flex-col items-center gap-2">
                         <span>Descubre más</span>
@@ -190,12 +218,15 @@
             </div>
         </section>
 
-        <!-- 5. HARDWARE -->
-        <section id="hardware" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-black">
+        <!-- 5. TIENDA -->
+        <section id="tienda" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-black">
             <div class="max-w-6xl mx-auto w-full">
-                <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12">Productos Inteligentes</span>
+                <div class="flex justify-between items-end mb-12">
+                    <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block">Catálogo Oficial</span>
+                </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[minmax(300px,auto)]">
+                    <!-- Producto 1: Acrílico NFC -->
                     <div class="reveal md:col-span-2 bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-10 md:p-12 flex flex-col justify-between hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 100ms;">
                         <div>
                             <span class="inline-block px-4 py-1.5 bg-white text-black text-[10px] font-bold tracking-widest rounded-full w-max mb-6">NFC TAG</span>
@@ -207,14 +238,15 @@
                                 <span class="text-5xl font-light tracking-tighter text-white">$400</span>
                                 <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
                             </div>
-                            <button class="bg-zinc-900 text-white border border-zinc-700 hover:bg-white hover:text-black px-8 py-3 rounded-full text-sm font-medium transition-all duration-300">Encargar</button>
+                            <button onclick="addToCart('Acrílico Personalizado NFC', 400)" class="bg-zinc-900 text-white border border-zinc-700 hover:bg-white hover:text-black px-8 py-3 rounded-full text-sm font-medium transition-all duration-300">Añadir al carrito</button>
                         </div>
                     </div>
 
+                    <!-- Producto 2: Acrílico QR -->
                     <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-10 md:p-12 flex flex-col justify-between hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 300ms;">
                         <div>
                             <span class="inline-block px-4 py-1.5 bg-zinc-900 text-zinc-300 border border-zinc-800 text-[10px] font-bold tracking-widest rounded-full w-max mb-6">EXPRESS</span>
-                            <h3 class="text-2xl font-medium tracking-tighter text-white mb-4">Acrílico QR</h3>
+                            <h3 class="text-2xl font-medium tracking-tighter text-white mb-4">Acrílico QR Base</h3>
                             <p class="text-zinc-500 font-light text-base">Base de acrílico con código QR directo.</p>
                         </div>
                         <div class="mt-16 flex items-end justify-between">
@@ -222,6 +254,7 @@
                                 <span class="text-4xl font-light tracking-tighter text-white">$300</span>
                                 <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
                             </div>
+                            <button onclick="addToCart('Acrílico QR Base', 300)" class="mt-4 bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-700 w-full py-2 rounded-full text-xs font-medium transition-all duration-300">Añadir al carrito</button>
                         </div>
                     </div>
                 </div>
@@ -243,24 +276,25 @@
                             <input type="text" id="cliente-nombre" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 transition-colors font-light" placeholder="Ej. Diego Rodríguez">
                         </div>
 
-  <!-- Selección de Servicio -->
-                                <div>
-                                    <label for="servicio" class="block text-xs font-bold tracking-widest text-zinc-500 uppercase mb-2">Servicio de interés</label>
-                                    <div class="relative">
-                                        <select id="servicio" required class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-white/50 transition-all appearance-none text-sm">
-                                            <option value="" disabled selected>Selecciona una opción</option>
-                                            <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
-                                            <option value="Inteligencia Artificial">Inteligencia Artificial</option>
-                                            <option value="Automatización">Automatización</option>
-                                            <option value="Acrílicos NFC / QR">Acrílicos NFC / QR</option>
-                                            <option value="Streetwear & Custom">Streetwear & Custom</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-                                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                                        </div>
-                                    </div>
+                        <!-- Selección de Servicio -->
+                        <div>
+                            <label for="servicio" class="block text-xs font-bold tracking-widest text-zinc-500 uppercase mb-2">Servicio de interés</label>
+                            <div class="relative">
+                                <select id="servicio" required class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-white/50 transition-all appearance-none text-sm">
+                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
+                                    <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+                                    <option value="Automatización">Automatización</option>
+                                    <option value="Acrílicos NFC / QR">Acrílicos NFC / QR</option>
+                                    <option value="Streetwear & Custom">Streetwear & Custom</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </div>
+                            </div>
+                        </div>
+                        
                         <!-- Detalles -->
                         <div>
                             <label class="text-zinc-400 text-sm font-light mb-3 block">Cuéntanos un poco sobre tu idea</label>
@@ -271,7 +305,7 @@
                         <div class="mt-4 flex justify-end">
                             <button type="submit" class="bg-white text-black px-8 py-4 rounded-full text-sm font-bold hover:bg-zinc-200 transition-all duration-300 w-full md:w-auto shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
                                 <span>Enviar mensaje a WhatsApp</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7-7m7-7H3"></path></svg>
                             </button>
                         </div>
                     </form>
@@ -280,7 +314,7 @@
         </section>
     </main>
 
-    <!-- SCRIPT GENERAL: Acrílico 3D + Intersection Observer -->
+    <!-- SCRIPTS -->
     <script>
         const scrollContainer = document.getElementById('scroll-container');
         const acrylicCard = document.getElementById('acrylic-card');
@@ -303,7 +337,7 @@
         const observerOptions = {
             root: scrollContainer,
             rootMargin: '0px',
-            threshold: 0.15 // Se activa cuando el 15% del elemento es visible
+            threshold: 0.15
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -311,45 +345,129 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 } else {
-                    // Quitamos la clase para que se vuelva a animar si el usuario sube y baja (efecto wow constante)
                     entry.target.classList.remove('active');
                 }
             });
         }, observerOptions);
 
-        // Buscar todo lo que tenga la clase 'reveal' y observarlo
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 3. LÓGICA PARA ENVIAR A WHATSAPP
+        // 3. LÓGICA DEL FORMULARIO DE COTIZACIÓN
         function enviarWhatsApp() {
-            // 1. Obtener los valores del formulario
             const nombre = document.getElementById('cliente-nombre').value;
             const detalles = document.getElementById('cliente-detalles').value;
-            
-            // Buscar cuál de las opciones de servicio seleccionó
-            const opcionesServicio = document.getElementsByName('servicio');
-            let servicioSeleccionado = '';
-            for (let opcion of opcionesServicio) {
-                if (opcion.checked) {
-                    servicioSeleccionado = opcion.value;
-                    break;
-                }
-            }
-
-            // 2. Construir el mensaje
-            // Usamos %0A para los saltos de línea en WhatsApp
-            const mensaje = `Hola IA MAKERS, soy *${nombre}*.%0A%0AMe interesa cotizar:%0A*${servicioSeleccionado}*%0A%0ADetalles del proyecto:%0A_${detalles}_`;
-
-            // 3. Tu número de teléfono (Cambia los 0 por tu número real de Cancún a 10 dígitos)
-            // IMPORTANTE: Pon tu número con código de país (52 para México). Ej: 529981234567
+            const servicioSeleccionado = document.getElementById('servicio').value;
             const telefonoIA = "529982145011"; 
 
-            // 4. Crear el enlace de WhatsApp y abrirlo
-            const urlWhatsApp = `https://wa.me/${telefonoIA}?text=${mensaje}`;
-            window.open(urlWhatsApp, '_blank');
+            const mensaje = `Hola IA MAKERS, soy *${nombre}*.%0A%0AMe interesa cotizar:%0A*${servicioSeleccionado}*%0A%0ADetalles del proyecto:%0A_${detalles}_`;
+            window.open(`https://wa.me/${telefonoIA}?text=${mensaje}`, '_blank');
         }
+
+        // 4. LÓGICA DEL CARRITO DE COMPRAS
+        let cart = JSON.parse(localStorage.getItem('iamakers_cart')) || [];
+        const telefonoVentas = "529982145011"; 
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const cartCountElement = document.getElementById('cart-count');
+            
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-zinc-600 text-center mt-10 text-sm">Tu carrito está vacío.</p>';
+            }
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                totalItems += item.quantity;
+
+                cartItemsContainer.innerHTML += `
+                    <div class="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-zinc-800/50">
+                        <div class="flex-1">
+                            <h4 class="text-white text-sm font-medium mb-1">${item.name}</h4>
+                            <p class="text-zinc-500 text-xs">$${item.price} MXN c/u</p>
+                            <div class="flex items-center gap-3 mt-3">
+                                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs hover:bg-zinc-700">-</button>
+                                <span class="text-white text-xs">${item.quantity}</span>
+                                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs hover:bg-zinc-700">+</button>
+                            </div>
+                        </div>
+                        <div class="text-right ml-4">
+                            <p class="text-white text-sm font-medium mb-3">$${itemTotal}</p>
+                            <button onclick="removeItem(${index})" class="text-red-500/70 hover:text-red-500 text-xs transition-colors">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartTotalElement.innerHTML = `$${total} <span class="text-sm text-zinc-600 font-bold">MXN</span>`;
+            
+            if (totalItems > 0) {
+                cartCountElement.textContent = totalItems;
+                cartCountElement.classList.remove('opacity-0');
+            } else {
+                cartCountElement.classList.add('opacity-0');
+            }
+            
+            localStorage.setItem('iamakers_cart', JSON.stringify(cart));
+        }
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+            toggleCart(true); 
+        }
+
+        function changeQuantity(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if (forceOpen === true) {
+                sidebar.classList.remove('translate-x-full');
+            } else {
+                sidebar.classList.toggle('translate-x-full');
+            }
+        }
+
+        function sendCartToWhatsApp() {
+            if (cart.length === 0) return;
+            
+            let message = `*NUEVO PEDIDO - IA MAKERS*%0A%0A`;
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `${item.quantity}x ${item.name} - $${itemTotal} MXN%0A`;
+            });
+            
+            message += `%0A*Subtotal:* $${total} MXN%0A%0A_Me gustaría continuar con el proceso de pago/entrega._`;
+            
+            window.open(`https://wa.me/${telefonoVentas}?text=${message}`, '_blank');
+        }
+
+        // Inicializar carrito al cargar la página
+        updateCartUI();
     </script>
 </body>
 </html>
