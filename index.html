@@ -15,8 +15,6 @@
             font-family: 'Inter', sans-serif; 
             perspective: 1000px; 
         }
-        ::-webkit-scrollbar { width: 0px; }
-
         /* CLASES DE ANIMACIÓN CORE */
         .reveal {
             opacity: 0;
@@ -29,65 +27,54 @@
         }
     </style>
 </head>
-<body class="bg-[#0a0a0a] text-white antialiased overflow-hidden tracking-tight">
+<!-- FIX: overflow-x-hidden evita el scroll lateral fantasma en móviles -->
+<body class="bg-[#0a0a0a] text-white antialiased overflow-x-hidden tracking-tight relative">
 
     <!-- NAVEGACIÓN -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 transition-all">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center z-50 relative">
-        
-        <!-- LOGO OFICIAL (Ajustado para celular y PC) -->
-        <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-80">
-            <img src="./logo.png" alt="IA MAKERS Logo" class="h-16 md:h-32 w-auto object-contain">
-        </a>
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 transition-all">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center z-50 relative">
+            
+            <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-80">
+                <img src="./logo.png" alt="IA MAKERS Logo" class="h-16 md:h-32 w-auto object-contain">
+            </a>
 
-        <!-- ÍCONOS Y BOTONES (Siempre visibles) -->
-        <div class="flex items-center gap-6">
-            <!-- MENÚ DESKTOP -->
-            <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] text-zinc-500 items-center">
-                <a href="#hero" class="hover:text-white transition-colors">INICIO</a>
-                <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
-                <a href="#servicios" class="hover:text-white transition-colors">SERVICIOS</a>
-                <a href="#portafolio" class="hover:text-white transition-colors">PROYECTOS</a>
-                <a href="#tienda" class="hover:text-white transition-colors">TIENDA</a>
-                <a href="#contacto" class="hover:text-white transition-colors">CONTACTO</a>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] text-zinc-500 items-center">
+                    <a href="#hero" class="hover:text-white transition-colors">INICIO</a>
+                    <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
+                    <a href="#servicios" class="hover:text-white transition-colors">SERVICIOS</a>
+                    <a href="#portafolio" class="hover:text-white transition-colors">PROYECTOS</a>
+                    <a href="#tienda" class="hover:text-white transition-colors">TIENDA</a>
+                    <a href="#contacto" class="hover:text-white transition-colors">CONTACTO</a>
+                </div>
+
+                <button onclick="toggleCart()" class="text-white hover:text-cyan-400 transition-colors relative">
+                    <svg class="w-6 h-6 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
+                </button>
+
+                <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-cyan-400 transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
-
-            <!-- Icono de Carrito -->
-            <button onclick="toggleCart()" class="text-white hover:text-cyan-400 transition-colors relative">
-                <svg class="w-6 h-6 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
-            </button>
-
-            <!-- Menú Hamburguesa Móvil -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-cyan-400 transition-colors">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<!-- PANEL MENÚ MÓVIL (Movido FUERA del Nav para arreglar clics en iPhone) -->
-<div id="mobile-menu" class="fixed inset-0 bg-[#0a0a0a]/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-center items-center gap-8 md:hidden pt-24">
-    <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-white hover:text-cyan-400 transition-colors">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-    </button>
-    <a href="#hero" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">INICIO</a>
-    <a href="#about" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">NOSOTROS</a>
-    <a href="#servicios" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">SERVICIOS</a>
-    <a href="#portafolio" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">PROYECTOS</a>
-    <a href="#tienda" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">TIENDA</a>
-    <a href="#contacto" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">CONTACTO</a>
-</div>
-
-    <!-- ACRÍLICO FLOTANTE 3D -->
-    <div id="acrylic-card" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-80 h-96 bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl z-0 pointer-events-none shadow-[0_0_50px_rgba(255,255,255,0.03)] transition-transform duration-300 ease-out flex items-center justify-center">
-        <div class="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center bg-black/40">
-            <svg class="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        </div>
+    <!-- PANEL MENÚ MÓVIL -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#0a0a0a]/95 backdrop-blur-xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-center items-center gap-8 md:hidden pt-24 h-screen w-full">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-white hover:text-cyan-400 transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <a href="#hero" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">INICIO</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">NOSOTROS</a>
+        <a href="#servicios" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">SERVICIOS</a>
+        <a href="#portafolio" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">PROYECTOS</a>
+        <a href="#tienda" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">TIENDA</a>
+        <a href="#contacto" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">CONTACTO</a>
     </div>
 
     <!-- PANEL LATERAL DEL CARRITO -->
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-zinc-800/80 shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-zinc-800/80 shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col h-screen">
         <div class="p-6 border-b border-zinc-800/80 flex justify-between items-center mt-20 md:mt-0">
             <h2 class="text-xl font-medium text-white tracking-tighter">Tu Pedido</h2>
             <button onclick="toggleCart()" class="text-zinc-400 hover:text-white transition-colors">
@@ -95,29 +82,34 @@
             </button>
         </div>
         
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
-            <!-- Los items del carrito se inyectan aquí con JS -->
-        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
 
-        <div class="p-6 border-t border-zinc-800/80 bg-[#050505]">
+        <div class="p-6 border-t border-zinc-800/80 bg-[#050505] pb-10 md:pb-6">
             <div class="flex justify-between items-center mb-6">
                 <span class="text-zinc-400 text-sm font-light">Subtotal</span>
                 <span id="cart-total" class="text-2xl font-light text-white">$0 <span class="text-sm text-zinc-600 font-bold">MXN</span></span>
             </div>
             <button onclick="sendCartToWhatsApp()" class="w-full bg-white text-black py-4 rounded-xl text-sm font-bold hover:bg-zinc-200 transition-all flex justify-center items-center gap-2">
-                <span>Continuar compra por WhatsApp</span>
+                <span>Continuar por WhatsApp</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
         </div>
     </div>
 
-    <!-- CONTENEDOR SCROLL MAGNÉTICO -->
-    <main id="scroll-container" class="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+    <!-- FIX: Se esconde en celular (hidden md:flex) para evitar crasheos de memoria -->
+    <div id="acrylic-card" class="hidden md:flex fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-80 h-96 bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl z-0 pointer-events-none shadow-[0_0_50px_rgba(255,255,255,0.03)] transition-transform duration-300 ease-out items-center justify-center">
+        <div class="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center bg-black/40">
+            <svg class="w-8 h-8 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+    </div>
 
+    <!-- FIX: Se removió el CSS de snap-scroll para dar una lectura libre y fluida -->
+    <main class="w-full">
         <!-- 1. HERO SECTION -->
-        <section id="hero" class="snap-start h-screen w-full flex flex-col justify-center px-6 relative z-10 bg-transparent pointer-events-none">
-            <div class="max-w-5xl mx-auto text-center pointer-events-auto mt-20">
-                <h1 class="reveal text-6xl md:text-[6rem] font-medium tracking-tighter leading-none mb-8 drop-shadow-2xl">
+        <!-- FIX: Textos reducidos en celular (text-5xl) para que no se salgan -->
+        <section id="hero" class="min-h-screen w-full flex flex-col justify-center px-6 relative z-10 bg-transparent">
+            <div class="max-w-5xl mx-auto text-center mt-20">
+                <h1 class="reveal text-5xl md:text-[6rem] font-medium tracking-tighter leading-none mb-8 drop-shadow-2xl">
                     Piensa diferente. <br>
                     <span class="text-zinc-600">Construye inteligente.</span>
                 </h1>
@@ -130,41 +122,41 @@
             </div>
         </section>
 
-        <!-- 2. ABOUT ME / FILOSOFÍA -->
-        <section id="about" class="snap-start h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-transparent pointer-events-none">
-            <div class="max-w-7xl mx-auto w-full h-full flex flex-col justify-between pointer-events-auto">
-                <div class="mt-20 md:mt-10 reveal">
+        <!-- 2. ABOUT ME -->
+        <section id="about" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-transparent">
+            <div class="max-w-7xl mx-auto w-full flex flex-col justify-between">
+                <div class="mt-10 reveal">
                     <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase mb-8 block">Sobre Nosotros</span>
                     <p class="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight max-w-4xl">
                         Somos un equipo innovador, en el cual siempre buscamos resolver áreas de oportunidad en cualquier sector.
                     </p>
                 </div>
                 
-                <div class="flex flex-col md:flex-row justify-between items-end border-t border-zinc-800/50 pt-10 pb-10">
-                    <div class="reveal w-full text-center md:text-left mb-8 md:mb-0" style="transition-delay: 100ms;">
-                        <div class="text-7xl md:text-[9rem] font-light tracking-tighter text-white leading-none">2</div>
+                <div class="flex flex-col md:flex-row justify-between items-end border-t border-zinc-800/50 pt-16 mt-16 md:mt-24">
+                    <div class="reveal w-full text-center md:text-left mb-12 md:mb-0" style="transition-delay: 100ms;">
+                        <div class="text-6xl md:text-[9rem] font-light tracking-tighter text-white leading-none">2</div>
                         <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">AÑOS DE EXPERIENCIA</div>
                     </div>
-                    <div class="reveal w-full text-center md:text-left mb-8 md:mb-0" style="transition-delay: 250ms;">
-                        <div class="text-7xl md:text-[9rem] font-light tracking-tighter text-white leading-none">4</div>
+                    <div class="reveal w-full text-center md:text-left mb-12 md:mb-0" style="transition-delay: 250ms;">
+                        <div class="text-6xl md:text-[9rem] font-light tracking-tighter text-white leading-none">4</div>
                         <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">PROYECTOS</div>
                     </div>
                     <div class="reveal w-full text-center md:text-left" style="transition-delay: 400ms;">
-                        <div class="text-7xl md:text-[9rem] font-light tracking-tighter text-white leading-none">3</div>
+                        <div class="text-6xl md:text-[9rem] font-light tracking-tighter text-white leading-none">3</div>
                         <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">CERTIFICADOS</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. PILARES / WHAT WE DO -->
-        <section id="servicios" class="snap-start min-h-screen w-full flex flex-col justify-center py-32 px-6 relative z-10 bg-black">
-            <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-16">
+        <!-- 3. PILARES -->
+        <section id="servicios" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-black">
+            <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-12 md:gap-16">
                 <div class="reveal w-full md:w-1/3">
-                    <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12">Nuestros Pilares</span>
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-8 md:mb-12">Nuestros Pilares</span>
                 </div>
                 
-                <div class="w-full md:w-2/3 flex flex-col gap-24">
+                <div class="w-full md:w-2/3 flex flex-col gap-16 md:gap-24">
                     <div class="reveal group" style="transition-delay: 100ms;">
                         <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Desarrollo Web & PWA</h3>
                         <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
@@ -174,7 +166,6 @@
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">JavaScript</span>
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Vercel</span>
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Tailwind</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">UI/UX</span>
                         </div>
                     </div>
 
@@ -187,20 +178,17 @@
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">NFC</span>
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">QR</span>
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Acrílico</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Configuración</span>
                         </div>
                     </div>
 
                     <div class="reveal group" style="transition-delay: 300ms;">
                         <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Streetwear Custom</h3>
                         <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
-                            Diseño y fabricación de uniformes y prendas personalizadas. Aplicamos estampado DTF, vinil textil e impresión láser de alta calidad para tu marca.
+                            Diseño y fabricación de uniformes y prendas personalizadas. Aplicamos estampado DTF y vinil textil de alta calidad para tu marca.
                         </p>
                         <div class="flex flex-wrap gap-3">
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Diseño</span>
                             <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Marca</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Estilo</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Moda</span>
                         </div>
                     </div>
                 </div>
@@ -208,32 +196,32 @@
         </section>
 
         <!-- 4. PORTAFOLIO PWA -->
-        <section id="portafolio" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-[#050505]">
+        <section id="portafolio" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-[#050505]">
             <div class="max-w-7xl mx-auto w-full">
                 <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12 text-center md:text-left">Ecosistema PWA</span>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-10 md:p-14 h-[32rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 100ms;">
+                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-8 md:p-14 min-h-[28rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 transition-all duration-500" style="transition-delay: 100ms;">
                         <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-cyan-900/10 to-transparent pointer-events-none"></div>
                         <div class="relative z-10">
                             <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">Logística & IA</span>
-                            <h3 class="text-4xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">FleetGuard AI</h3>
+                            <h3 class="text-3xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">FleetGuard AI</h3>
                         </div>
-                        <div class="relative z-10">
-                            <p class="text-zinc-400 font-light text-lg mb-6 max-w-md">Ecosistema corporativo con chatbot integrado para diagnóstico automotriz y gestión de flotillas.</p>
-                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">Ver Proyecto</button>
+                        <div class="relative z-10 mt-12">
+                            <p class="text-zinc-400 font-light text-base md:text-lg mb-6 max-w-md">Ecosistema corporativo con chatbot integrado para diagnóstico automotriz y gestión de flotillas.</p>
+                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors w-full md:w-auto">Ver Proyecto</button>
                         </div>
                     </div>
 
-                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-10 md:p-14 h-[32rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 300ms;">
+                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-8 md:p-14 min-h-[28rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 transition-all duration-500" style="transition-delay: 300ms;">
                         <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-900/10 to-transparent pointer-events-none"></div>
                         <div class="relative z-10">
                             <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">Hospitality</span>
-                            <h3 class="text-4xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">Wellness Guide</h3>
+                            <h3 class="text-3xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">Wellness Guide</h3>
                         </div>
-                        <div class="relative z-10">
-                            <p class="text-zinc-400 font-light text-lg mb-6 max-w-md">Interfaz progresiva diseñada para hotelería premium, optimizando el servicio de alimentos y bienestar.</p>
-                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">Ver Proyecto</button>
+                        <div class="relative z-10 mt-12">
+                            <p class="text-zinc-400 font-light text-base md:text-lg mb-6 max-w-md">Interfaz progresiva diseñada para hotelería premium, optimizando el servicio de alimentos y bienestar.</p>
+                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors w-full md:w-auto">Ver Proyecto</button>
                         </div>
                     </div>
                 </div>
@@ -241,68 +229,63 @@
         </section>
 
         <!-- 5. TIENDA -->
-        <section id="tienda" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-black">
+        <section id="tienda" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-black">
             <div class="max-w-6xl mx-auto w-full">
                 <div class="flex justify-between items-end mb-12">
                     <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block">Catálogo Oficial</span>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[minmax(300px,auto)]">
-                    <!-- Producto 1: Acrílico NFC -->
-                    <div class="reveal md:col-span-2 bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-10 md:p-12 flex flex-col justify-between hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 100ms;">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
+                    <div class="reveal md:col-span-2 bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between hover:border-white/40 transition-all duration-500">
                         <div>
                             <span class="inline-block px-4 py-1.5 bg-white text-black text-[10px] font-bold tracking-widest rounded-full w-max mb-6">NFC TAG</span>
                             <h3 class="text-3xl md:text-4xl font-medium tracking-tighter text-white mb-4">Acrílico Personalizado</h3>
                             <p class="text-zinc-500 font-light max-w-md text-base">Letrero de reseñas a la medida con integración de chip NFC oculto y código QR. Acabado premium.</p>
                         </div>
-                        <div class="mt-16 flex items-end justify-between">
+                        <div class="mt-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <span class="text-5xl font-light tracking-tighter text-white">$400</span>
                                 <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
                             </div>
-                            <button onclick="addToCart('Acrílico Personalizado NFC', 400)" class="bg-zinc-900 text-white border border-zinc-700 hover:bg-white hover:text-black px-8 py-3 rounded-full text-sm font-medium transition-all duration-300">Añadir al carrito</button>
+                            <button onclick="addToCart('Acrílico Personalizado NFC', 400)" class="bg-zinc-900 text-white border border-zinc-700 hover:bg-white hover:text-black px-8 py-4 md:py-3 rounded-xl md:rounded-full text-sm font-bold transition-all duration-300 w-full md:w-auto text-center">Añadir al carrito</button>
                         </div>
                     </div>
 
-                    <!-- Producto 2: Acrílico QR -->
-                    <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-10 md:p-12 flex flex-col justify-between hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all duration-500" style="transition-delay: 300ms;">
+                    <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between hover:border-white/40 transition-all duration-500">
                         <div>
                             <span class="inline-block px-4 py-1.5 bg-zinc-900 text-zinc-300 border border-zinc-800 text-[10px] font-bold tracking-widest rounded-full w-max mb-6">EXPRESS</span>
                             <h3 class="text-2xl font-medium tracking-tighter text-white mb-4">Acrílico QR Base</h3>
                             <p class="text-zinc-500 font-light text-base">Base de acrílico con código QR directo.</p>
                         </div>
-                        <div class="mt-16 flex items-end justify-between">
+                        <div class="mt-12 flex flex-col justify-between h-full">
                             <div>
                                 <span class="text-4xl font-light tracking-tighter text-white">$300</span>
                                 <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
                             </div>
-                            <button onclick="addToCart('Acrílico QR Base', 300)" class="mt-4 bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-700 w-full py-2 rounded-full text-xs font-medium transition-all duration-300">Añadir al carrito</button>
+                            <button onclick="addToCart('Acrílico QR Base', 300)" class="mt-6 bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-700 w-full py-4 md:py-3 rounded-xl md:rounded-full text-sm font-bold transition-all duration-300">Añadir al carrito</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- 6. CONTACTO / COTIZACIÓN (WhatsApp) -->
-        <section id="contacto" class="snap-start min-h-screen w-full flex flex-col justify-center py-20 px-6 relative z-10 bg-black">
+        <!-- 6. CONTACTO -->
+        <section id="contacto" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-black">
             <div class="max-w-4xl mx-auto w-full">
                 <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-8 text-center md:text-left">Inicia tu proyecto</span>
-                <h2 class="reveal text-4xl md:text-6xl font-medium tracking-tighter text-white mb-12 text-center md:text-left" style="transition-delay: 100ms;">Cotiza con nosotros.</h2>
+                <h2 class="reveal text-4xl md:text-6xl font-medium tracking-tighter text-white mb-12 text-center md:text-left">Cotiza con nosotros.</h2>
                 
-                <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 hover:border-white/20 transition-all duration-500" style="transition-delay: 200ms;">
+                <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 transition-all duration-500">
                     <form id="whatsapp-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); enviarWhatsApp();">
-                        
-                        <!-- Nombre -->
                         <div>
                             <label class="text-zinc-400 text-sm font-light mb-3 block">¿Cómo te llamas?</label>
-                            <input type="text" id="cliente-nombre" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 transition-colors font-light" placeholder="Ej. Diego Rodríguez">
+                            <input type="text" id="cliente-nombre" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 font-light" placeholder="Ej. Diego Rodríguez">
                         </div>
 
-                        <!-- Selección de Servicio -->
                         <div>
                             <label for="servicio" class="block text-xs font-bold tracking-widest text-zinc-500 uppercase mb-2">Servicio de interés</label>
                             <div class="relative">
-                                <select id="servicio" required class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-white/50 transition-all appearance-none text-sm">
+                                <select id="servicio" required class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-white/50 appearance-none text-sm">
                                     <option value="" disabled selected>Selecciona una opción</option>
                                     <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
                                     <option value="Inteligencia Artificial">Inteligencia Artificial</option>
@@ -317,17 +300,15 @@
                             </div>
                         </div>
                         
-                        <!-- Detalles -->
                         <div>
                             <label class="text-zinc-400 text-sm font-light mb-3 block">Cuéntanos un poco sobre tu idea</label>
-                            <textarea id="cliente-detalles" rows="3" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 transition-colors font-light resize-none" placeholder="Quiero un menú digital para mi restaurante..."></textarea>
+                            <textarea id="cliente-detalles" rows="3" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 font-light resize-none" placeholder="Quiero un menú digital..."></textarea>
                         </div>
 
-                        <!-- Botón Enviar -->
                         <div class="mt-4 flex justify-end">
-                            <button type="submit" class="bg-white text-black px-8 py-4 rounded-full text-sm font-bold hover:bg-zinc-200 transition-all duration-300 w-full md:w-auto shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
+                            <button type="submit" class="bg-white text-black px-8 py-4 rounded-xl md:rounded-full text-sm font-bold hover:bg-zinc-200 transition-all w-full md:w-auto flex items-center justify-center gap-2">
                                 <span>Enviar mensaje a WhatsApp</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7-7m7-7H3"></path></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                             </button>
                         </div>
                     </form>
@@ -338,13 +319,12 @@
 
     <!-- SCRIPTS -->
     <script>
-        const scrollContainer = document.getElementById('scroll-container');
-        const acrylicCard = document.getElementById('acrylic-card');
-
-        // 1. ROTACIÓN DEL ACRÍLICO AL HACER SCROLL
-        scrollContainer.addEventListener('scroll', () => {
-            const scrollTop = scrollContainer.scrollTop;
-            const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        // 1. ROTACIÓN DEL ACRÍLICO AL HACER SCROLL (Optimizado)
+        window.addEventListener('scroll', () => {
+            if(window.innerWidth < 768) return; // No ejecuta cálculos 3D en móvil para evitar crasheos
+            const acrylicCard = document.getElementById('acrylic-card');
+            const scrollTop = window.scrollY;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
             if (maxScroll <= 0) return; 
 
             const scrollProgress = scrollTop / maxScroll;
@@ -355,13 +335,8 @@
             acrylicCard.style.transform = `translate(-50%, calc(-50% + ${moveY}px)) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
         });
 
-        // 2. OBSERVADOR DE INTERSECCIÓN (Animaciones Reveal)
-        const observerOptions = {
-            root: scrollContainer,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
+        // 2. OBSERVADOR DE INTERSECCIÓN (Arreglado para scroll normal)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.10 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -371,21 +346,26 @@
                 }
             });
         }, observerOptions);
-
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 3. LÓGICA DEL FORMULARIO DE COTIZACIÓN
+        // 3. FUNCIONES DE UI
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden'); // Bloquea el scroll de fondo
+        }
+
+        // 4. LÓGICA DE WHATSAPP GENERAL
         function enviarWhatsApp() {
             const nombre = document.getElementById('cliente-nombre').value;
             const detalles = document.getElementById('cliente-detalles').value;
             const servicioSeleccionado = document.getElementById('servicio').value;
             const telefonoIA = "529982145011"; 
-
             const mensaje = `Hola IA MAKERS, soy *${nombre}*.%0A%0AMe interesa cotizar:%0A*${servicioSeleccionado}*%0A%0ADetalles del proyecto:%0A_${detalles}_`;
             window.open(`https://wa.me/${telefonoIA}?text=${mensaje}`, '_blank');
         }
 
-        // 4. LÓGICA DEL CARRITO DE COMPRAS
+        // 5. LÓGICA DEL CARRITO
         let cart = JSON.parse(localStorage.getItem('iamakers_cart')) || [];
         const telefonoVentas = "529982145011"; 
 
@@ -395,8 +375,7 @@
             const cartCountElement = document.getElementById('cart-count');
             
             cartItemsContainer.innerHTML = '';
-            let total = 0;
-            let totalItems = 0;
+            let total = 0; let totalItems = 0;
 
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p class="text-zinc-600 text-center mt-10 text-sm">Tu carrito está vacío.</p>';
@@ -404,56 +383,47 @@
 
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                totalItems += item.quantity;
-
+                total += itemTotal; totalItems += item.quantity;
                 cartItemsContainer.innerHTML += `
                     <div class="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-zinc-800/50">
                         <div class="flex-1">
                             <h4 class="text-white text-sm font-medium mb-1">${item.name}</h4>
                             <p class="text-zinc-500 text-xs">$${item.price} MXN c/u</p>
                             <div class="flex items-center gap-3 mt-3">
-                                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs hover:bg-zinc-700">-</button>
+                                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white text-xs">-</button>
                                 <span class="text-white text-xs">${item.quantity}</span>
-                                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs hover:bg-zinc-700">+</button>
+                                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white text-xs">+</button>
                             </div>
                         </div>
                         <div class="text-right ml-4">
                             <p class="text-white text-sm font-medium mb-3">$${itemTotal}</p>
-                            <button onclick="removeItem(${index})" class="text-red-500/70 hover:text-red-500 text-xs transition-colors">Eliminar</button>
+                            <button onclick="removeItem(${index})" class="text-red-500/70 hover:text-red-500 text-xs">Eliminar</button>
                         </div>
                     </div>
                 `;
             });
 
             cartTotalElement.innerHTML = `$${total} <span class="text-sm text-zinc-600 font-bold">MXN</span>`;
-            
             if (totalItems > 0) {
                 cartCountElement.textContent = totalItems;
                 cartCountElement.classList.remove('opacity-0');
             } else {
                 cartCountElement.classList.add('opacity-0');
             }
-            
             localStorage.setItem('iamakers_cart', JSON.stringify(cart));
         }
 
         function addToCart(name, price) {
             const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ name, price, quantity: 1 });
-            }
+            if (existingItem) existingItem.quantity += 1;
+            else cart.push({ name, price, quantity: 1 });
             updateCartUI();
             toggleCart(true); 
         }
 
         function changeQuantity(index, delta) {
             cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
+            if (cart[index].quantity <= 0) cart.splice(index, 1);
             updateCartUI();
         }
 
@@ -464,34 +434,23 @@
 
         function toggleCart(forceOpen = false) {
             const sidebar = document.getElementById('cart-sidebar');
-            if (forceOpen === true) {
-                sidebar.classList.remove('translate-x-full');
-            } else {
-                sidebar.classList.toggle('translate-x-full');
-            }
+            if (forceOpen === true) sidebar.classList.remove('translate-x-full');
+            else sidebar.classList.toggle('translate-x-full');
         }
-function toggleMobileMenu() {
-        const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('translate-x-full');
-    }
+
         function sendCartToWhatsApp() {
             if (cart.length === 0) return;
-            
             let message = `*NUEVO PEDIDO - IA MAKERS*%0A%0A`;
             let total = 0;
-            
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
                 message += `${item.quantity}x ${item.name} - $${itemTotal} MXN%0A`;
             });
-            
-            message += `%0A*Subtotal:* $${total} MXN%0A%0A_Me gustaría continuar con el proceso de pago/entrega._`;
-            
+            message += `%0A*Subtotal:* $${total} MXN%0A%0A_Me gustaría continuar con el proceso de pago._`;
             window.open(`https://wa.me/${telefonoVentas}?text=${message}`, '_blank');
         }
 
-        // Inicializar carrito al cargar la página
         updateCartUI();
     </script>
 </body>
