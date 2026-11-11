@@ -15,11 +15,9 @@
             font-family: 'Inter', sans-serif; 
             background-color: #050505;
             color: #ffffff;
-            perspective: 1200px;
             overflow-x: hidden;
         }
         
-        /* Animaciones Reveal de Scroll */
         .reveal {
             opacity: 0;
             transform: translateY(30px); 
@@ -30,53 +28,68 @@
             transform: translateY(0);
         }
 
-        /* EFECTO 3D ACRÍLICO NFC (ESTILO FRAGMENT) */
-        @keyframes fragment-float {
-            0% { transform: translate(-50%, -50%) translateY(0px) rotateX(8deg) rotateY(-12deg); }
-            50% { transform: translate(-50%, -50%) translateY(-20px) rotateX(12deg) rotateY(8deg); }
-            100% { transform: translate(-50%, -50%) translateY(0px) rotateX(8deg) rotateY(-12deg); }
-        }
-        .fragment-glass {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 280px;
-            height: 420px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            animation: fragment-float 12s ease-in-out infinite;
+        /* --- CÁMARA 3D Y BARAJA ESTILO FRAGMENT --- */
+        #scene-3d {
+            perspective: 2000px;
             transform-style: preserve-3d;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 0;
-            pointer-events: none;
         }
-        /* Icono NFC interno con profundidad */
-        .fragment-chip {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.5);
+        
+        .deck-container {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            transform-style: preserve-3d;
+            transform: rotateX(15deg) rotateY(-25deg) rotateZ(5deg);
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        #scene-3d:hover .deck-container {
+            transform: rotateX(10deg) rotateY(-15deg) rotateZ(0deg) scale(1.05);
+        }
+
+        .acrylic-card {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 24px;
+            box-shadow: -20px 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: float-continuous 4s ease-in-out infinite alternate;
             display: flex;
             align-items: center;
             justify-content: center;
-            transform: translateZ(40px); /* Le da efecto 3D hacia afuera */
+            overflow: hidden;
+        }
+
+        .card-1 { transform: translateZ(120px) translateX(80px); animation-delay: 0s; z-index: 5; }
+        .card-2 { transform: translateZ(60px) translateX(40px); animation-delay: -0.5s; z-index: 4; }
+        .card-3 { transform: translateZ(0px) translateX(0px); animation-delay: -1s; z-index: 3; }
+        .card-4 { transform: translateZ(-60px) translateX(-40px); animation-delay: -1.5s; z-index: 2; }
+        .card-5 { transform: translateZ(-120px) translateX(-80px); animation-delay: -2s; z-index: 1; opacity: 0.5; }
+
+        #scene-3d:hover .card-1 { transform: translateZ(150px) translateX(100px); }
+        #scene-3d:hover .card-2 { transform: translateZ(75px) translateX(50px); }
+        #scene-3d:hover .card-4 { transform: translateZ(-75px) translateX(-50px); }
+        #scene-3d:hover .card-5 { transform: translateZ(-150px) translateX(-100px); }
+
+        @keyframes float-continuous {
+            0% { margin-top: 0px; }
+            100% { margin-top: 15px; }
         }
     </style>
 </head>
 <body class="antialiased tracking-tight relative">
 
-    <!-- NAVEGACIÓN MINIMALISTA -->
+    <!-- NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-[#050505]/80 backdrop-blur-2xl border-b border-white/5 transition-all">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center z-50 relative">
             <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-70">
-                <img src="./logo.png" alt="IA MAKERS Logo" class="h-10 md:h-12 w-auto object-contain filter grayscale brightness-200">
+                <!-- Se removió el filtro para mostrar tu logo en sus colores originales -->
+                <img src="./logo.png" alt="IA MAKERS Logo" class="h-10 md:h-12 w-auto object-contain">
             </a>
 
             <div class="flex items-center gap-8">
@@ -101,76 +114,64 @@
         </div>
     </nav>
 
-    <!-- PANEL MENÚ MÓVIL (Intacto) -->
-    <div id="mobile-menu" class="fixed inset-0 bg-[#050505]/95 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col justify-center items-center gap-8 md:hidden pt-24 h-screen w-full">
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-zinc-400 hover:text-white transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-        <a href="#hero" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Inicio</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Nosotros</a>
-        <a href="#servicios" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Servicios</a>
-        <a href="#portafolio" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Proyectos</a>
-        <a href="#tienda" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Tienda</a>
-        <a href="#contacto" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Contacto</a>
+    <!-- PANEL MENÚ MÓVIL Y CARRITO -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#050505]/95 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-500 flex flex-col justify-center items-center gap-8 md:hidden">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-zinc-400"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        <a href="#hero" onclick="toggleMobileMenu()" class="text-3xl font-light text-white">Inicio</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="text-3xl font-light text-white">Nosotros</a>
+        <a href="#servicios" onclick="toggleMobileMenu()" class="text-3xl font-light text-white">Servicios</a>
+        <a href="#portafolio" onclick="toggleMobileMenu()" class="text-3xl font-light text-white">Proyectos</a>
+        <a href="#tienda" onclick="toggleMobileMenu()" class="text-3xl font-light text-white">Tienda</a>
+        <a href="#contacto" onclick="toggleMobileMenu()" class="text-3xl font-light text-white">Contacto</a>
     </div>
 
-    <!-- PANEL LATERAL DEL CARRITO -->
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-white/5 shadow-2xl z-[70] transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col h-screen">
-        <div class="p-6 border-b border-white/5 flex justify-between items-center mt-20 md:mt-0">
-            <h2 class="text-lg font-medium text-white tracking-tight">Tu Pedido</h2>
-            <button onclick="toggleCart()" class="text-zinc-500 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-white/5 z-[70] transform translate-x-full transition-transform duration-500 flex flex-col h-screen">
+        <div class="p-6 border-b border-white/5 flex justify-between mt-20 md:mt-0">
+            <h2 class="text-lg font-medium text-white">Tu Pedido</h2>
+            <button onclick="toggleCart()" class="text-zinc-500 hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
-        
         <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
-
-        <div class="p-6 border-t border-white/5 bg-[#050505] pb-10 md:pb-6">
-            <div class="flex justify-between items-center mb-6">
-                <span class="text-zinc-500 text-sm font-light">Subtotal</span>
-                <span id="cart-total" class="text-2xl font-light text-white">$0 <span class="text-xs text-zinc-600 font-medium">MXN</span></span>
-            </div>
-            <button onclick="sendCartToWhatsApp()" class="w-full bg-white text-black py-4 rounded-xl text-sm font-medium hover:bg-zinc-200 transition-all flex justify-center items-center gap-2">
-                <span>Proceder al pago</span>
-            </button>
+        <div class="p-6 bg-[#050505]">
+            <div class="flex justify-between mb-6"><span class="text-zinc-500">Subtotal</span><span id="cart-total" class="text-2xl text-white">$0</span></div>
+            <button onclick="sendCartToWhatsApp()" class="w-full bg-white text-black py-4 rounded-xl font-medium">Proceder al pago</button>
         </div>
     </div>
 
     <main class="w-full">
-        <!-- 1. HERO SECTION FRAGMENT STYLE -->
-        <section id="hero" class="min-h-screen w-full flex flex-col justify-center px-6 relative z-10 overflow-hidden">
-            
-            <!-- EL ACRÍLICO FLOTANTE Y EL RESPLANDOR (Integrado en el Hero) -->
-            <div class="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden hidden md:block">
-                <!-- Resplandor tenue y grisáceo (NO cyan) -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-700/10 rounded-full blur-[100px]"></div>
-                <!-- Tarjeta de cristal NFC -->
-                <div class="fragment-glass">
-                    <div class="fragment-chip">
-                        <!-- Icono simulando NFC / Escaneo -->
-                        <svg class="w-8 h-8 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4m16 0a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="min-h-screen w-full flex items-center px-6 md:px-12 relative z-10 overflow-hidden pt-24 md:pt-0">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                
+                <div class="text-left relative z-20">
+                    <h1 class="reveal text-5xl md:text-[6rem] font-medium tracking-tighter leading-none mb-8 text-white drop-shadow-lg" style="transition-delay: 100ms;">
+                        Piensa diferente.<br>
+                        <span class="text-zinc-500">Construye inteligente.</span>
+                    </h1>
+                    
+                    <div class="reveal flex flex-col sm:flex-row gap-4 mt-12" style="transition-delay: 200ms;">
+                        <button onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 bg-white text-black rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
+                            Iniciar un proyecto
+                        </button>
+                        <button onclick="document.getElementById('tienda').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 bg-transparent border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white/10 transition-colors">
+                            Ver catálogo NFC
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- CONTENIDO FRONTAL -->
-            <div class="max-w-5xl mx-auto text-center mt-20 relative z-10">
-                <div class="reveal inline-block px-4 py-1.5 border border-white/10 rounded-full bg-white/5 backdrop-blur-md mb-8">
-                    <span class="text-[10px] font-medium tracking-[0.2em] text-zinc-400 uppercase">Cancún · PWA · NFC · DTF</span>
-                </div>
-                
-                <h1 class="reveal text-5xl md:text-[7rem] font-medium tracking-tighter leading-none mb-8 text-white drop-shadow-lg" style="transition-delay: 100ms;">
-                    Piensa diferente.<br>
-                    <span class="text-zinc-500">Construye inteligente.</span>
-                </h1>
-                
-                <div class="reveal flex flex-col md:flex-row justify-center items-center gap-4 mt-12" style="transition-delay: 200ms;">
-                    <button onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})" class="w-full md:w-auto px-8 py-4 bg-white text-black rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
-                        Iniciar un proyecto
-                    </button>
-                    <button onclick="document.getElementById('tienda').scrollIntoView({behavior: 'smooth'})" class="w-full md:w-auto px-8 py-4 bg-transparent border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white/10 transition-colors backdrop-blur-sm">
-                        Ver catálogo NFC
-                    </button>
+                <div id="scene-3d" class="hidden md:flex h-[600px] w-full items-center justify-center relative z-10">
+                    <div class="absolute w-[400px] h-[400px] bg-zinc-700/10 rounded-full blur-[80px]"></div>
+                    <div class="deck-container">
+                        <!-- Reemplaza acrilico.png con tu foto real sin fondo -->
+                        <div class="acrylic-card card-5"><img src="./acrilico.png" class="w-4/5 object-contain opacity-20" alt=""></div>
+                        <div class="acrylic-card card-4"><img src="./acrilico.png" class="w-4/5 object-contain opacity-40" alt=""></div>
+                        <div class="acrylic-card card-3"><img src="./acrilico.png" class="w-4/5 object-contain opacity-60" alt=""></div>
+                        <div class="acrylic-card card-2"><img src="./acrilico.png" class="w-4/5 object-contain opacity-80" alt=""></div>
+                        <div class="acrylic-card card-1">
+                            <img src="./acrilico.png" class="w-4/5 h-auto object-contain" alt="Acrílico NFC IA Makers" onerror="this.style.display='none'">
+                            <!-- Ícono falso en caso de que la imagen no cargue -->
+                            <svg class="w-12 h-12 text-zinc-300 absolute" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4m16 0a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -179,7 +180,7 @@
         <section id="about" class="py-32 px-6 relative z-10">
             <div class="max-w-7xl mx-auto w-full">
                 <div class="reveal">
-                    <h2 class="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight max-w-4xl">
+                    <h2 class="text-3xl md:text-5xl font-light text-white leading-tight max-w-4xl">
                         Somos un equipo innovador, enfocado en resolver cuellos de botella mediante <span class="text-zinc-500">tecnología invisible y hardware táctil.</span>
                     </h2>
                 </div>
@@ -201,7 +202,7 @@
             </div>
         </section>
 
-        <!-- 3. PILARES -->
+        <!-- 3. PILARES (Restaurados) -->
         <section id="servicios" class="py-32 px-6 relative z-10 bg-[#0a0a0a]">
             <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-16">
                 <div class="reveal w-full md:w-1/4">
@@ -219,7 +220,7 @@
 
                     <div class="reveal group">
                         <span class="text-zinc-700 text-2xl font-light block mb-4">02</span>
-                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6">Smart Tags</h3>
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6">Smart Tags Acrílicos</h3>
                         <p class="text-zinc-500 text-lg font-light mb-8 max-w-2xl">
                             Letreros de reseñas y tarjetas de presentación inteligentes. Hardware de acrílico premium para conectar el espacio físico con tus plataformas mediante NFC y QR.
                         </p>
@@ -236,43 +237,60 @@
             </div>
         </section>
 
-        <!-- 5. TIENDA NFC -->
-        <section id="tienda" class="py-32 px-6 relative z-10 border-t border-white/5">
+        <!-- 4. PORTAFOLIO PWA (Restaurado) -->
+        <section id="portafolio" class="py-32 px-6 relative z-10">
             <div class="max-w-7xl mx-auto w-full">
-                <div class="flex justify-between items-end mb-16">
-                    <h2 class="reveal text-4xl md:text-5xl font-medium tracking-tighter text-white">Hardware NFC</h2>
-                </div>
+                <span class="reveal text-[11px] font-medium tracking-[0.2em] text-zinc-500 uppercase block mb-16 text-center md:text-left">Ecosistema PWA</span>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
+                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 min-h-[28rem] flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
                         <div>
-                            <span class="inline-block px-3 py-1 bg-white text-black text-[9px] font-bold tracking-widest rounded-full mb-6 uppercase">Más vendido</span>
-                            <h3 class="text-3xl font-medium tracking-tighter text-white mb-4">Acrílico Personalizado NFC</h3>
-                            <p class="text-zinc-500 font-light text-sm max-w-sm">Letrero de reseñas a la medida con integración de chip NFC oculto y código QR. Acabado premium ideal para restaurantes y hoteles.</p>
+                            <span class="text-[10px] font-medium tracking-[0.2em] text-zinc-500 uppercase">Logística & IA</span>
+                            <h3 class="text-3xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">FleetGuard AI</h3>
                         </div>
-                        <div class="mt-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div class="text-3xl font-light tracking-tighter text-white">$400 <span class="text-zinc-600 text-xs font-medium">MXN</span></div>
-                            <button onclick="addToCart('Acrílico Personalizado NFC', 400)" class="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black px-6 py-3 rounded-full text-sm font-medium transition-colors">Agregar al pedido</button>
+                        <div class="mt-12">
+                            <p class="text-zinc-500 font-light text-base md:text-lg mb-8 max-w-md">Ecosistema corporativo con chatbot integrado para diagnóstico automotriz y gestión de flotillas.</p>
                         </div>
                     </div>
 
-                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
+                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 min-h-[28rem] flex flex-col justify-between hover:bg-white/[0.04] transition-colors" style="transition-delay: 200ms;">
                         <div>
-                            <span class="inline-block px-3 py-1 bg-transparent border border-zinc-600 text-zinc-400 text-[9px] font-bold tracking-widest rounded-full mb-6 uppercase">Básico</span>
-                            <h3 class="text-3xl font-medium tracking-tighter text-white mb-4">Acrílico QR Base</h3>
-                            <p class="text-zinc-500 font-light text-sm max-w-sm">Base de acrílico minimalista con código QR directo grabado. Perfecto para links de menús digitales.</p>
+                            <span class="text-[10px] font-medium tracking-[0.2em] text-zinc-500 uppercase">Hospitality</span>
+                            <h3 class="text-3xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">Wellness Guide</h3>
                         </div>
-                        <div class="mt-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div class="text-3xl font-light tracking-tighter text-white">$300 <span class="text-zinc-600 text-xs font-medium">MXN</span></div>
-                            <button onclick="addToCart('Acrílico QR Base', 300)" class="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black px-6 py-3 rounded-full text-sm font-medium transition-colors">Agregar al pedido</button>
+                        <div class="mt-12">
+                            <p class="text-zinc-500 font-light text-base md:text-lg mb-8 max-w-md">Interfaz progresiva diseñada para hotelería premium, optimizando el servicio de alimentos y bienestar.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- 6. CONTACTO -->
-        <section id="contacto" class="py-32 px-6 relative z-10 border-t border-white/5 bg-[#0a0a0a]">
+
+        <!-- 5. TIENDA NFC -->
+        <section id="tienda" class="py-32 px-6 border-t border-white/5 bg-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="reveal text-4xl md:text-5xl font-medium mb-16">Hardware NFC</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
+                        <div><span class="inline-block px-3 py-1 bg-white text-black text-[9px] font-bold rounded-full mb-6 uppercase">Más vendido</span>
+                        <h3 class="text-3xl font-medium mb-4">Acrílico NFC</h3>
+                        <p class="text-zinc-500 text-sm max-w-sm">Letrero premium con chip NFC oculto.</p></div>
+                        <div class="mt-16 flex flex-col md:flex-row md:items-center justify-between gap-6"><div class="text-3xl font-light">$400 <span class="text-xs font-medium text-zinc-600">MXN</span></div>
+                        <button onclick="addToCart('Acrílico NFC', 400)" class="bg-transparent border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors">Agregar al pedido</button></div>
+                    </div>
+                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
+                        <div><span class="inline-block px-3 py-1 bg-transparent border border-zinc-600 text-zinc-400 text-[9px] font-bold rounded-full mb-6 uppercase">Básico</span>
+                        <h3 class="text-3xl font-medium mb-4">Acrílico QR</h3>
+                        <p class="text-zinc-500 text-sm max-w-sm">Base minimalista con QR grabado.</p></div>
+                        <div class="mt-16 flex flex-col md:flex-row md:items-center justify-between gap-6"><div class="text-3xl font-light">$300 <span class="text-xs font-medium text-zinc-600">MXN</span></div>
+                        <button onclick="addToCart('Acrílico QR', 300)" class="bg-transparent border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors">Agregar al pedido</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTACTO (Restaurado) -->
+        <section id="contacto" class="py-32 px-6 relative z-10 border-t border-white/5 bg-[#050505]">
             <div class="max-w-3xl mx-auto w-full">
                 <h2 class="reveal text-4xl md:text-5xl font-medium tracking-tighter text-white mb-16 text-center">Inicia tu proyecto.</h2>
                 
@@ -315,120 +333,60 @@
         </section>
     </main>
 
-    <!-- SCRIPTS MANTENIDOS INTACTOS -->
+    <!-- SCRIPTS -->
     <script>
+        window.addEventListener('scroll', () => {
+            if(window.innerWidth < 768) return; 
+            const scene = document.getElementById('scene-3d');
+            const scrolled = window.scrollY;
+            if(scene && scrolled < 800) {
+                scene.style.transform = `translateY(-${scrolled * 0.7}px)`;
+                scene.style.opacity = 1 - (scrolled / 500);
+            }
+        });
+
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.10 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                } else {
-                    entry.target.classList.remove('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
+                else entry.target.classList.remove('active');
             });
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('translate-x-full');
-            document.body.classList.toggle('overflow-hidden'); 
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('translate-x-full'); }
+        function toggleCart(force = false) { 
+            const sb = document.getElementById('cart-sidebar');
+            if(force) sb.classList.remove('translate-x-full'); else sb.classList.toggle('translate-x-full');
         }
-
-        function enviarWhatsApp() {
-            const nombre = document.getElementById('cliente-nombre').value;
-            const detalles = document.getElementById('cliente-detalles').value;
-            const servicioSeleccionado = document.getElementById('servicio').value;
-            const telefonoIA = "529982145011"; 
-            const mensaje = `Hola IA MAKERS, soy *${nombre}*.%0A%0AMe interesa cotizar:%0A*${servicioSeleccionado}*%0A%0ADetalles del proyecto:%0A_${detalles}_`;
-            window.open(`https://wa.me/${telefonoIA}?text=${mensaje}`, '_blank');
-        }
-
+        
         let cart = JSON.parse(localStorage.getItem('iamakers_cart')) || [];
-        const telefonoVentas = "529982145011"; 
-
         function updateCartUI() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotalElement = document.getElementById('cart-total');
-            const cartCountElement = document.getElementById('cart-count');
-            
-            cartItemsContainer.innerHTML = '';
-            let total = 0; let totalItems = 0;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-zinc-600 text-center mt-10 text-xs font-light">Tu carrito está vacío.</p>';
-            }
-
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal; totalItems += item.quantity;
-                cartItemsContainer.innerHTML += `
-                    <div class="flex justify-between items-center bg-[#050505] p-4 rounded-xl border border-white/5">
-                        <div class="flex-1">
-                            <h4 class="text-white text-sm font-medium mb-1">${item.name}</h4>
-                            <p class="text-zinc-500 text-xs font-light">$${item.price} MXN c/u</p>
-                            <div class="flex items-center gap-3 mt-3">
-                                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-full border border-white/10 text-zinc-400 text-xs hover:text-white transition-colors">-</button>
-                                <span class="text-white text-xs font-medium">${item.quantity}</span>
-                                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-full border border-white/10 text-zinc-400 text-xs hover:text-white transition-colors">+</button>
-                            </div>
-                        </div>
-                        <div class="text-right ml-4">
-                            <p class="text-white text-sm font-medium mb-3">$${itemTotal}</p>
-                            <button onclick="removeItem(${index})" class="text-zinc-600 hover:text-white text-xs transition-colors underline decoration-zinc-700 underline-offset-4">Quitar</button>
-                        </div>
-                    </div>
-                `;
+            const container = document.getElementById('cart-items');
+            let total = 0, items = 0; container.innerHTML = '';
+            if(cart.length === 0) container.innerHTML = '<p class="text-zinc-600 text-sm">Carrito vacío.</p>';
+            cart.forEach((i, idx) => {
+                const sub = i.price * i.quantity; total += sub; items += i.quantity;
+                container.innerHTML += `<div class="bg-[#050505] p-4 rounded-xl border border-white/5 mb-3"><div class="flex justify-between"><span class="text-sm font-medium">${i.name}</span><span class="text-sm">$${sub}</span></div><div class="flex gap-3 mt-2"><button onclick="changeQuantity(${idx}, -1)" class="px-2 text-zinc-400">-</button><span class="text-sm">${i.quantity}</span><button onclick="changeQuantity(${idx}, 1)" class="px-2 text-zinc-400">+</button><button onclick="removeItem(${idx})" class="ml-auto text-xs text-zinc-600 underline">Quitar</button></div></div>`;
             });
-
-            cartTotalElement.innerHTML = `$${total} <span class="text-xs text-zinc-600 font-medium">MXN</span>`;
-            if (totalItems > 0) {
-                cartCountElement.textContent = totalItems;
-                cartCountElement.classList.remove('opacity-0');
-            } else {
-                cartCountElement.classList.add('opacity-0');
-            }
+            document.getElementById('cart-total').textContent = `$${total} MXN`;
+            document.getElementById('cart-count').textContent = items;
+            document.getElementById('cart-count').style.opacity = items > 0 ? 1 : 0;
             localStorage.setItem('iamakers_cart', JSON.stringify(cart));
         }
-
         function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) existingItem.quantity += 1;
-            else cart.push({ name, price, quantity: 1 });
-            updateCartUI();
-            toggleCart(true); 
+            const ex = cart.find(i => i.name === name);
+            if(ex) ex.quantity++; else cart.push({name, price, quantity: 1});
+            updateCartUI(); toggleCart(true);
         }
-
-        function changeQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function toggleCart(forceOpen = false) {
-            const sidebar = document.getElementById('cart-sidebar');
-            if (forceOpen === true) sidebar.classList.remove('translate-x-full');
-            else sidebar.classList.toggle('translate-x-full');
-        }
-
+        function changeQuantity(idx, d) { cart[idx].quantity += d; if(cart[idx].quantity <= 0) cart.splice(idx, 1); updateCartUI(); }
+        function removeItem(idx) { cart.splice(idx, 1); updateCartUI(); }
         function sendCartToWhatsApp() {
-            if (cart.length === 0) return;
-            let message = `*NUEVO PEDIDO - IA MAKERS*%0A%0A`;
-            let total = 0;
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                message += `${item.quantity}x ${item.name} - $${itemTotal} MXN%0A`;
-            });
-            message += `%0A*Subtotal:* $${total} MXN%0A%0A_Me gustaría continuar con el proceso de pago._`;
-            window.open(`https://wa.me/${telefonoVentas}?text=${message}`, '_blank');
+            if(cart.length === 0) return;
+            let msg = `*NUEVO PEDIDO - IA MAKERS*%0A%0A`, tot = 0;
+            cart.forEach(i => { const sub = i.price * i.quantity; tot += sub; msg += `${i.quantity}x ${i.name} - $${sub} MXN%0A`; });
+            window.open(`https://wa.me/529982145011?text=${msg}%0A*Total: $${tot} MXN*`, '_blank');
         }
-
         updateCartUI();
     </script>
 </body>
