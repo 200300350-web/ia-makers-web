@@ -13,42 +13,74 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            perspective: 1200px; 
+            background-color: #050505;
+            color: #ffffff;
+            perspective: 1200px;
+            overflow-x: hidden;
         }
+        
         /* Animaciones Reveal de Scroll */
         .reveal {
             opacity: 0;
-            transform: translateY(40px) scale(0.98); 
+            transform: translateY(30px); 
             transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
-        /* EFECTO 3D ESTILO FRAGMENT */
+        /* EFECTO 3D ACRÍLICO NFC (ESTILO FRAGMENT) */
         @keyframes fragment-float {
-            0% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(-15deg) translateY(0px); }
-            50% { transform: translate(-50%, -50%) rotateX(15deg) rotateY(15deg) translateY(-20px); }
-            100% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(-15deg) translateY(0px); }
+            0% { transform: translate(-50%, -50%) translateY(0px) rotateX(8deg) rotateY(-12deg); }
+            50% { transform: translate(-50%, -50%) translateY(-20px) rotateX(12deg) rotateY(8deg); }
+            100% { transform: translate(-50%, -50%) translateY(0px) rotateX(8deg) rotateY(-12deg); }
         }
         .fragment-glass {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 420px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
             animation: fragment-float 12s ease-in-out infinite;
             transform-style: preserve-3d;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 0;
+            pointer-events: none;
+        }
+        /* Icono NFC interno con profundidad */
+        .fragment-chip {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateZ(40px); /* Le da efecto 3D hacia afuera */
         }
     </style>
 </head>
-<body class="bg-[#0a0a0a] text-white antialiased overflow-x-hidden tracking-tight relative">
+<body class="antialiased tracking-tight relative">
 
-    <!-- NAVEGACIÓN -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 transition-all">
+    <!-- NAVEGACIÓN MINIMALISTA -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#050505]/80 backdrop-blur-2xl border-b border-white/5 transition-all">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center z-50 relative">
-            <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-80">
-                <img src="./logo.png" alt="IA MAKERS Logo" class="h-16 md:h-32 w-auto object-contain">
+            <a href="#hero" class="flex items-center cursor-pointer transition-opacity hover:opacity-70">
+                <img src="./logo.png" alt="IA MAKERS Logo" class="h-10 md:h-12 w-auto object-contain filter grayscale brightness-200">
             </a>
 
-            <div class="flex items-center gap-6">
-                <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] text-zinc-500 items-center">
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex gap-8 text-[11px] font-medium tracking-[0.15em] text-zinc-500 items-center">
                     <a href="#hero" class="hover:text-white transition-colors">INICIO</a>
                     <a href="#about" class="hover:text-white transition-colors">NOSOTROS</a>
                     <a href="#servicios" class="hover:text-white transition-colors">SERVICIOS</a>
@@ -57,234 +89,182 @@
                     <a href="#contacto" class="hover:text-white transition-colors">CONTACTO</a>
                 </div>
 
-                <button onclick="toggleCart()" class="text-white hover:text-cyan-400 transition-colors relative">
+                <button onclick="toggleCart()" class="text-zinc-300 hover:text-white transition-colors relative">
                     <svg class="w-6 h-6 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 transition-opacity">0</span>
                 </button>
 
-                <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-cyan-400 transition-colors">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-zinc-300 hover:text-white transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- PANEL MENÚ MÓVIL -->
-    <div id="mobile-menu" class="fixed inset-0 bg-[#0a0a0a]/95 backdrop-blur-xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-center items-center gap-8 md:hidden pt-24 h-screen w-full">
-        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-white hover:text-cyan-400 transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <!-- PANEL MENÚ MÓVIL (Intacto) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#050505]/95 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col justify-center items-center gap-8 md:hidden pt-24 h-screen w-full">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-zinc-400 hover:text-white transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-        <a href="#hero" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">INICIO</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">NOSOTROS</a>
-        <a href="#servicios" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">SERVICIOS</a>
-        <a href="#portafolio" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">PROYECTOS</a>
-        <a href="#tienda" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">TIENDA</a>
-        <a href="#contacto" onclick="toggleMobileMenu()" class="text-2xl font-light tracking-widest text-white hover:text-cyan-400 transition-colors">CONTACTO</a>
+        <a href="#hero" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Inicio</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Nosotros</a>
+        <a href="#servicios" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Servicios</a>
+        <a href="#portafolio" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Proyectos</a>
+        <a href="#tienda" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Tienda</a>
+        <a href="#contacto" onclick="toggleMobileMenu()" class="text-3xl font-light tracking-tight text-white hover:text-zinc-400 transition-colors">Contacto</a>
     </div>
 
     <!-- PANEL LATERAL DEL CARRITO -->
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-zinc-800/80 shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col h-screen">
-        <div class="p-6 border-b border-zinc-800/80 flex justify-between items-center mt-20 md:mt-0">
-            <h2 class="text-xl font-medium text-white tracking-tighter">Tu Pedido</h2>
-            <button onclick="toggleCart()" class="text-zinc-400 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-[#0a0a0a] border-l border-white/5 shadow-2xl z-[70] transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col h-screen">
+        <div class="p-6 border-b border-white/5 flex justify-between items-center mt-20 md:mt-0">
+            <h2 class="text-lg font-medium text-white tracking-tight">Tu Pedido</h2>
+            <button onclick="toggleCart()" class="text-zinc-500 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
         
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
 
-        <div class="p-6 border-t border-zinc-800/80 bg-[#050505] pb-10 md:pb-6">
+        <div class="p-6 border-t border-white/5 bg-[#050505] pb-10 md:pb-6">
             <div class="flex justify-between items-center mb-6">
-                <span class="text-zinc-400 text-sm font-light">Subtotal</span>
-                <span id="cart-total" class="text-2xl font-light text-white">$0 <span class="text-sm text-zinc-600 font-bold">MXN</span></span>
+                <span class="text-zinc-500 text-sm font-light">Subtotal</span>
+                <span id="cart-total" class="text-2xl font-light text-white">$0 <span class="text-xs text-zinc-600 font-medium">MXN</span></span>
             </div>
-            <button onclick="sendCartToWhatsApp()" class="w-full bg-white text-black py-4 rounded-xl text-sm font-bold hover:bg-zinc-200 transition-all flex justify-center items-center gap-2">
-                <span>Continuar por WhatsApp</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <button onclick="sendCartToWhatsApp()" class="w-full bg-white text-black py-4 rounded-xl text-sm font-medium hover:bg-zinc-200 transition-all flex justify-center items-center gap-2">
+                <span>Proceder al pago</span>
             </button>
         </div>
     </div>
 
     <main class="w-full">
-        <!-- 1. HERO SECTION (Acrílico inyectado directo aquí para garantizar visibilidad) -->
-        <section id="hero" class="min-h-screen w-full flex flex-col justify-center px-6 relative z-10 bg-transparent overflow-hidden">
+        <!-- 1. HERO SECTION FRAGMENT STYLE -->
+        <section id="hero" class="min-h-screen w-full flex flex-col justify-center px-6 relative z-10 overflow-hidden">
             
-            <!-- FONDO 3D FRAGMENT -->
-            <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 items-center justify-center pointer-events-none">
-                <!-- Resplandor neón -->
-                <div class="absolute w-[450px] h-[450px] bg-cyan-500/20 rounded-full blur-[80px]"></div>
-                
-                <!-- Tarjeta -->
-                <div class="relative w-72 h-96 bg-white/10 backdrop-blur-md border border-white/30 rounded-[2.5rem] shadow-[0_0_80px_rgba(0,255,255,0.15)] flex items-center justify-center" style="animation: glass-float 8s ease-in-out infinite; perspective: 1000px;">
-                    <style>
-                        @keyframes glass-float {
-                            0% { transform: translateY(0px) rotateX(10deg) rotateY(-10deg); }
-                            50% { transform: translateY(-20px) rotateX(15deg) rotateY(10deg); }
-                            100% { transform: translateY(0px) rotateX(10deg) rotateY(-10deg); }
-                        }
-                    </style>
-                    <div class="w-20 h-20 rounded-full border border-white/30 flex items-center justify-center bg-black/80 shadow-2xl">
-                        <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <!-- EL ACRÍLICO FLOTANTE Y EL RESPLANDOR (Integrado en el Hero) -->
+            <div class="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden hidden md:block">
+                <!-- Resplandor tenue y grisáceo (NO cyan) -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-700/10 rounded-full blur-[100px]"></div>
+                <!-- Tarjeta de cristal NFC -->
+                <div class="fragment-glass">
+                    <div class="fragment-chip">
+                        <!-- Icono simulando NFC / Escaneo -->
+                        <svg class="w-8 h-8 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4m16 0a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
                     </div>
                 </div>
             </div>
 
-            <!-- TEXTOS FRONTALES -->
+            <!-- CONTENIDO FRONTAL -->
             <div class="max-w-5xl mx-auto text-center mt-20 relative z-10">
-                <h1 class="reveal text-5xl md:text-[6rem] font-medium tracking-tighter leading-none mb-8 drop-shadow-2xl">
-                    Piensa diferente. <br>
-                    <span class="text-zinc-600">Construye inteligente.</span>
+                <div class="reveal inline-block px-4 py-1.5 border border-white/10 rounded-full bg-white/5 backdrop-blur-md mb-8">
+                    <span class="text-[10px] font-medium tracking-[0.2em] text-zinc-400 uppercase">Cancún · PWA · NFC · DTF</span>
+                </div>
+                
+                <h1 class="reveal text-5xl md:text-[7rem] font-medium tracking-tighter leading-none mb-8 text-white drop-shadow-lg" style="transition-delay: 100ms;">
+                    Piensa diferente.<br>
+                    <span class="text-zinc-500">Construye inteligente.</span>
                 </h1>
-                <div class="reveal flex justify-center mt-12" style="transition-delay: 200ms;">
-                    <a href="#about" class="text-xs font-bold tracking-widest text-zinc-500 hover:text-white transition-colors uppercase flex flex-col items-center gap-2">
-                        <span>Descubre más</span>
-                        <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                    </a>
+                
+                <div class="reveal flex flex-col md:flex-row justify-center items-center gap-4 mt-12" style="transition-delay: 200ms;">
+                    <button onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})" class="w-full md:w-auto px-8 py-4 bg-white text-black rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
+                        Iniciar un proyecto
+                    </button>
+                    <button onclick="document.getElementById('tienda').scrollIntoView({behavior: 'smooth'})" class="w-full md:w-auto px-8 py-4 bg-transparent border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white/10 transition-colors backdrop-blur-sm">
+                        Ver catálogo NFC
+                    </button>
                 </div>
             </div>
         </section>
 
         <!-- 2. ABOUT ME -->
-        <section id="about" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-transparent">
-            <div class="max-w-7xl mx-auto w-full flex flex-col justify-between">
-                <div class="mt-10 reveal">
-                    <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase mb-8 block">Sobre Nosotros</span>
-                    <p class="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight max-w-4xl">
-                        Somos un equipo innovador, en el cual siempre buscamos resolver áreas de oportunidad en cualquier sector.
-                    </p>
+        <section id="about" class="py-32 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="reveal">
+                    <h2 class="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight max-w-4xl">
+                        Somos un equipo innovador, enfocado en resolver cuellos de botella mediante <span class="text-zinc-500">tecnología invisible y hardware táctil.</span>
+                    </h2>
                 </div>
                 
-                <div class="flex flex-col md:flex-row justify-between items-end border-t border-zinc-800/50 pt-16 mt-16 md:mt-24">
-                    <div class="reveal w-full text-center md:text-left mb-12 md:mb-0" style="transition-delay: 100ms;">
-                        <div class="text-6xl md:text-[9rem] font-light tracking-tighter text-white leading-none">2</div>
-                        <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">AÑOS DE EXPERIENCIA</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-16 mt-24">
+                    <div class="reveal">
+                        <div class="text-6xl md:text-[8rem] font-light tracking-tighter text-white leading-none">2</div>
+                        <div class="text-[10px] font-medium tracking-[0.2em] text-zinc-500 mt-6 uppercase">Años de Experiencia</div>
                     </div>
-                    <div class="reveal w-full text-center md:text-left mb-12 md:mb-0" style="transition-delay: 250ms;">
-                        <div class="text-6xl md:text-[9rem] font-light tracking-tighter text-white leading-none">4</div>
-                        <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">PROYECTOS</div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <div class="text-6xl md:text-[8rem] font-light tracking-tighter text-zinc-400 leading-none">4</div>
+                        <div class="text-[10px] font-medium tracking-[0.2em] text-zinc-500 mt-6 uppercase">Ecosistemas PWA</div>
                     </div>
-                    <div class="reveal w-full text-center md:text-left" style="transition-delay: 400ms;">
-                        <div class="text-6xl md:text-[9rem] font-light tracking-tighter text-white leading-none">3</div>
-                        <div class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 mt-4">CERTIFICADOS</div>
+                    <div class="reveal" style="transition-delay: 200ms;">
+                        <div class="text-6xl md:text-[8rem] font-light tracking-tighter text-zinc-600 leading-none">3</div>
+                        <div class="text-[10px] font-medium tracking-[0.2em] text-zinc-500 mt-6 uppercase">Certificaciones (IA & Code)</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 3. PILARES -->
-        <section id="servicios" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-black">
-            <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-12 md:gap-16">
-                <div class="reveal w-full md:w-1/3">
-                    <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-8 md:mb-12">Nuestros Pilares</span>
+        <section id="servicios" class="py-32 px-6 relative z-10 bg-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-16">
+                <div class="reveal w-full md:w-1/4">
+                    <span class="text-[11px] font-medium tracking-[0.2em] text-zinc-500 uppercase block">Nuestros Pilares</span>
                 </div>
                 
-                <div class="w-full md:w-2/3 flex flex-col gap-16 md:gap-24">
-                    <div class="reveal group" style="transition-delay: 100ms;">
-                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Desarrollo Web & PWA</h3>
-                        <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
-                            Aplicaciones web progresivas y arquitecturas digitales diseñadas para escalar con consistencia en cualquier dispositivo.
+                <div class="w-full md:w-3/4 flex flex-col gap-24">
+                    <div class="reveal group">
+                        <span class="text-zinc-700 text-2xl font-light block mb-4">01</span>
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6">Desarrollo Web & PWA</h3>
+                        <p class="text-zinc-500 text-lg font-light mb-8 max-w-2xl">
+                            Aplicaciones web progresivas y arquitecturas digitales diseñadas para escalar con consistencia en cualquier dispositivo, sin descargas de app stores.
                         </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">JavaScript</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Vercel</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Tailwind</span>
-                        </div>
                     </div>
 
-                    <div class="reveal group" style="transition-delay: 200ms;">
-                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Smart Tags</h3>
-                        <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
-                            Letreros de reseñas y tarjetas de presentación inteligentes. Hardware táctil para conectar el espacio físico con tus plataformas.
+                    <div class="reveal group">
+                        <span class="text-zinc-700 text-2xl font-light block mb-4">02</span>
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6">Smart Tags</h3>
+                        <p class="text-zinc-500 text-lg font-light mb-8 max-w-2xl">
+                            Letreros de reseñas y tarjetas de presentación inteligentes. Hardware de acrílico premium para conectar el espacio físico con tus plataformas mediante NFC y QR.
                         </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">NFC</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">QR</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Acrílico</span>
-                        </div>
                     </div>
 
-                    <div class="reveal group" style="transition-delay: 300ms;">
-                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6 group-hover:text-zinc-300 transition-colors">Streetwear Custom</h3>
-                        <p class="text-zinc-500 text-lg md:text-xl font-light mb-8 max-w-2xl">
-                            Diseño y fabricación de uniformes y prendas personalizadas. Aplicamos estampado DTF y vinil textil de alta calidad para tu marca.
+                    <div class="reveal group">
+                        <span class="text-zinc-700 text-2xl font-light block mb-4">03</span>
+                        <h3 class="text-4xl md:text-6xl font-medium tracking-tighter text-white mb-6">Streetwear Custom</h3>
+                        <p class="text-zinc-500 text-lg font-light mb-8 max-w-2xl">
+                            Diseño y fabricación de prendas premium. Aplicamos estampado DTF y vinil textil de alta calidad para posicionar visualmente tu marca.
                         </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Diseño</span>
-                            <span class="border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs px-4 py-2 rounded-full font-medium">Marca</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. PORTAFOLIO PWA -->
-        <section id="portafolio" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-[#050505]">
+        <!-- 5. TIENDA NFC -->
+        <section id="tienda" class="py-32 px-6 relative z-10 border-t border-white/5">
             <div class="max-w-7xl mx-auto w-full">
-                <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-12 text-center md:text-left">Ecosistema PWA</span>
+                <div class="flex justify-between items-end mb-16">
+                    <h2 class="reveal text-4xl md:text-5xl font-medium tracking-tighter text-white">Hardware NFC</h2>
+                </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-8 md:p-14 min-h-[28rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 transition-all duration-500" style="transition-delay: 100ms;">
-                        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-cyan-900/10 to-transparent pointer-events-none"></div>
-                        <div class="relative z-10">
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">Logística & IA</span>
-                            <h3 class="text-3xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">FleetGuard AI</h3>
-                        </div>
-                        <div class="relative z-10 mt-12">
-                            <p class="text-zinc-400 font-light text-base md:text-lg mb-6 max-w-md">Ecosistema corporativo con chatbot integrado para diagnóstico automotriz y gestión de flotillas.</p>
-                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors w-full md:w-auto">Ver Proyecto</button>
-                        </div>
-                    </div>
-
-                    <div class="reveal relative bg-gradient-to-br from-zinc-900 via-[#0a0a0a] to-black border border-zinc-800/80 rounded-[2rem] p-8 md:p-14 min-h-[28rem] flex flex-col justify-between overflow-hidden group hover:border-white/30 transition-all duration-500" style="transition-delay: 300ms;">
-                        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-900/10 to-transparent pointer-events-none"></div>
-                        <div class="relative z-10">
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">Hospitality</span>
-                            <h3 class="text-3xl md:text-5xl font-medium tracking-tighter text-white mt-4 leading-tight">Wellness Guide</h3>
-                        </div>
-                        <div class="relative z-10 mt-12">
-                            <p class="text-zinc-400 font-light text-base md:text-lg mb-6 max-w-md">Interfaz progresiva diseñada para hotelería premium, optimizando el servicio de alimentos y bienestar.</p>
-                            <button class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors w-full md:w-auto">Ver Proyecto</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. TIENDA -->
-        <section id="tienda" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-black">
-            <div class="max-w-6xl mx-auto w-full">
-                <div class="flex justify-between items-end mb-12">
-                    <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block">Catálogo Oficial</span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
-                    <div class="reveal md:col-span-2 bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between hover:border-white/40 transition-all duration-500">
+                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
                         <div>
-                            <span class="inline-block px-4 py-1.5 bg-white text-black text-[10px] font-bold tracking-widest rounded-full w-max mb-6">NFC TAG</span>
-                            <h3 class="text-3xl md:text-4xl font-medium tracking-tighter text-white mb-4">Acrílico Personalizado</h3>
-                            <p class="text-zinc-500 font-light max-w-md text-base">Letrero de reseñas a la medida con integración de chip NFC oculto y código QR. Acabado premium.</p>
+                            <span class="inline-block px-3 py-1 bg-white text-black text-[9px] font-bold tracking-widest rounded-full mb-6 uppercase">Más vendido</span>
+                            <h3 class="text-3xl font-medium tracking-tighter text-white mb-4">Acrílico Personalizado NFC</h3>
+                            <p class="text-zinc-500 font-light text-sm max-w-sm">Letrero de reseñas a la medida con integración de chip NFC oculto y código QR. Acabado premium ideal para restaurantes y hoteles.</p>
                         </div>
-                        <div class="mt-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-                            <div>
-                                <span class="text-5xl font-light tracking-tighter text-white">$400</span>
-                                <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
-                            </div>
-                            <button onclick="addToCart('Acrílico Personalizado NFC', 400)" class="bg-zinc-900 text-white border border-zinc-700 hover:bg-white hover:text-black px-8 py-4 md:py-3 rounded-xl md:rounded-full text-sm font-bold transition-all duration-300 w-full md:w-auto text-center">Añadir al carrito</button>
+                        <div class="mt-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div class="text-3xl font-light tracking-tighter text-white">$400 <span class="text-zinc-600 text-xs font-medium">MXN</span></div>
+                            <button onclick="addToCart('Acrílico Personalizado NFC', 400)" class="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black px-6 py-3 rounded-full text-sm font-medium transition-colors">Agregar al pedido</button>
                         </div>
                     </div>
 
-                    <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between hover:border-white/40 transition-all duration-500">
+                    <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-colors">
                         <div>
-                            <span class="inline-block px-4 py-1.5 bg-zinc-900 text-zinc-300 border border-zinc-800 text-[10px] font-bold tracking-widest rounded-full w-max mb-6">EXPRESS</span>
-                            <h3 class="text-2xl font-medium tracking-tighter text-white mb-4">Acrílico QR Base</h3>
-                            <p class="text-zinc-500 font-light text-base">Base de acrílico con código QR directo.</p>
+                            <span class="inline-block px-3 py-1 bg-transparent border border-zinc-600 text-zinc-400 text-[9px] font-bold tracking-widest rounded-full mb-6 uppercase">Básico</span>
+                            <h3 class="text-3xl font-medium tracking-tighter text-white mb-4">Acrílico QR Base</h3>
+                            <p class="text-zinc-500 font-light text-sm max-w-sm">Base de acrílico minimalista con código QR directo grabado. Perfecto para links de menús digitales.</p>
                         </div>
-                        <div class="mt-12 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-4xl font-light tracking-tighter text-white">$300</span>
-                                <span class="text-zinc-600 text-sm font-bold tracking-widest"> MXN</span>
-                            </div>
-                            <button onclick="addToCart('Acrílico QR Base', 300)" class="mt-6 bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-700 w-full py-4 md:py-3 rounded-xl md:rounded-full text-sm font-bold transition-all duration-300">Añadir al carrito</button>
+                        <div class="mt-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div class="text-3xl font-light tracking-tighter text-white">$300 <span class="text-zinc-600 text-xs font-medium">MXN</span></div>
+                            <button onclick="addToCart('Acrílico QR Base', 300)" class="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black px-6 py-3 rounded-full text-sm font-medium transition-colors">Agregar al pedido</button>
                         </div>
                     </div>
                 </div>
@@ -292,45 +272,41 @@
         </section>
         
         <!-- 6. CONTACTO -->
-        <section id="contacto" class="min-h-screen w-full flex flex-col justify-center py-24 px-6 relative z-10 bg-black">
-            <div class="max-w-4xl mx-auto w-full">
-                <span class="reveal text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-8 text-center md:text-left">Inicia tu proyecto</span>
-                <h2 class="reveal text-4xl md:text-6xl font-medium tracking-tighter text-white mb-12 text-center md:text-left">Cotiza con nosotros.</h2>
+        <section id="contacto" class="py-32 px-6 relative z-10 border-t border-white/5 bg-[#0a0a0a]">
+            <div class="max-w-3xl mx-auto w-full">
+                <h2 class="reveal text-4xl md:text-5xl font-medium tracking-tighter text-white mb-16 text-center">Inicia tu proyecto.</h2>
                 
-                <div class="reveal bg-[#050505] border border-zinc-800/80 rounded-[2rem] p-8 md:p-12 transition-all duration-500">
-                    <form id="whatsapp-form" class="flex flex-col gap-8" onsubmit="event.preventDefault(); enviarWhatsApp();">
+                <div class="reveal bg-white/[0.02] border border-white/10 rounded-[2rem] p-8 md:p-12">
+                    <form id="whatsapp-form" class="flex flex-col gap-6" onsubmit="event.preventDefault(); enviarWhatsApp();">
                         <div>
-                            <label class="text-zinc-400 text-sm font-light mb-3 block">¿Cómo te llamas?</label>
-                            <input type="text" id="cliente-nombre" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 font-light" placeholder="Ej. Diego Rodríguez">
+                            <label class="text-zinc-500 text-xs font-medium uppercase tracking-widest mb-3 block">Nombre completo</label>
+                            <input type="text" id="cliente-nombre" required class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Ej. Diego Rodríguez">
                         </div>
 
                         <div>
-                            <label for="servicio" class="block text-xs font-bold tracking-widest text-zinc-500 uppercase mb-2">Servicio de interés</label>
+                            <label for="servicio" class="text-zinc-500 text-xs font-medium uppercase tracking-widest mb-3 block">Área de interés</label>
                             <div class="relative">
-                                <select id="servicio" required class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-white/50 appearance-none text-sm">
-                                    <option value="" disabled selected>Selecciona una opción</option>
+                                <select id="servicio" required class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 appearance-none font-light">
+                                    <option value="" disabled selected>Selecciona una opción...</option>
                                     <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
-                                    <option value="Inteligencia Artificial">Inteligencia Artificial</option>
-                                    <option value="Automatización">Automatización</option>
                                     <option value="Acrílicos NFC / QR">Acrílicos NFC / QR</option>
                                     <option value="Streetwear & Custom">Streetwear & Custom</option>
                                     <option value="Otro">Otro</option>
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-zinc-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
                                 </div>
                             </div>
                         </div>
                         
                         <div>
-                            <label class="text-zinc-400 text-sm font-light mb-3 block">Cuéntanos un poco sobre tu idea</label>
-                            <textarea id="cliente-detalles" rows="3" required class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/50 font-light resize-none" placeholder="Quiero un menú digital..."></textarea>
+                            <label class="text-zinc-500 text-xs font-medium uppercase tracking-widest mb-3 block">Detalles</label>
+                            <textarea id="cliente-detalles" rows="4" required class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light resize-none" placeholder="Háblanos de tu marca o requerimiento..."></textarea>
                         </div>
 
-                        <div class="mt-4 flex justify-end">
-                            <button type="submit" class="bg-white text-black px-8 py-4 rounded-xl md:rounded-full text-sm font-bold hover:bg-zinc-200 transition-all w-full md:w-auto flex items-center justify-center gap-2">
-                                <span>Enviar mensaje a WhatsApp</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        <div class="mt-6">
+                            <button type="submit" class="w-full bg-white text-black py-4 rounded-xl text-sm font-medium hover:bg-zinc-200 transition-all flex items-center justify-center gap-2">
+                                <span>Enviar a WhatsApp</span>
                             </button>
                         </div>
                     </form>
@@ -339,9 +315,8 @@
         </section>
     </main>
 
-    <!-- SCRIPTS -->
+    <!-- SCRIPTS MANTENIDOS INTACTOS -->
     <script>
-        // 1. OBSERVADOR DE INTERSECCIÓN (Animaciones Reveal limpias)
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.10 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -354,14 +329,12 @@
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 2. FUNCIONES DE UI
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('translate-x-full');
-            document.body.classList.toggle('overflow-hidden'); // Bloquea el fondo
+            document.body.classList.toggle('overflow-hidden'); 
         }
 
-        // 3. LÓGICA DE WHATSAPP
         function enviarWhatsApp() {
             const nombre = document.getElementById('cliente-nombre').value;
             const detalles = document.getElementById('cliente-detalles').value;
@@ -371,7 +344,6 @@
             window.open(`https://wa.me/${telefonoIA}?text=${mensaje}`, '_blank');
         }
 
-        // 4. LÓGICA DEL CARRITO
         let cart = JSON.parse(localStorage.getItem('iamakers_cart')) || [];
         const telefonoVentas = "529982145011"; 
 
@@ -384,32 +356,32 @@
             let total = 0; let totalItems = 0;
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-zinc-600 text-center mt-10 text-sm">Tu carrito está vacío.</p>';
+                cartItemsContainer.innerHTML = '<p class="text-zinc-600 text-center mt-10 text-xs font-light">Tu carrito está vacío.</p>';
             }
 
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal; totalItems += item.quantity;
                 cartItemsContainer.innerHTML += `
-                    <div class="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-zinc-800/50">
+                    <div class="flex justify-between items-center bg-[#050505] p-4 rounded-xl border border-white/5">
                         <div class="flex-1">
                             <h4 class="text-white text-sm font-medium mb-1">${item.name}</h4>
-                            <p class="text-zinc-500 text-xs">$${item.price} MXN c/u</p>
+                            <p class="text-zinc-500 text-xs font-light">$${item.price} MXN c/u</p>
                             <div class="flex items-center gap-3 mt-3">
-                                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white text-xs hover:bg-zinc-700 transition-colors">-</button>
-                                <span class="text-white text-xs">${item.quantity}</span>
-                                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-zinc-800 text-white text-xs hover:bg-zinc-700 transition-colors">+</button>
+                                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-full border border-white/10 text-zinc-400 text-xs hover:text-white transition-colors">-</button>
+                                <span class="text-white text-xs font-medium">${item.quantity}</span>
+                                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-full border border-white/10 text-zinc-400 text-xs hover:text-white transition-colors">+</button>
                             </div>
                         </div>
                         <div class="text-right ml-4">
                             <p class="text-white text-sm font-medium mb-3">$${itemTotal}</p>
-                            <button onclick="removeItem(${index})" class="text-red-500/70 hover:text-red-500 text-xs transition-colors">Eliminar</button>
+                            <button onclick="removeItem(${index})" class="text-zinc-600 hover:text-white text-xs transition-colors underline decoration-zinc-700 underline-offset-4">Quitar</button>
                         </div>
                     </div>
                 `;
             });
 
-            cartTotalElement.innerHTML = `$${total} <span class="text-sm text-zinc-600 font-bold">MXN</span>`;
+            cartTotalElement.innerHTML = `$${total} <span class="text-xs text-zinc-600 font-medium">MXN</span>`;
             if (totalItems > 0) {
                 cartCountElement.textContent = totalItems;
                 cartCountElement.classList.remove('opacity-0');
