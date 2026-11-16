@@ -172,14 +172,17 @@
             </div>
 
             <div id="scene-3d" class="hidden md:flex h-[600px] w-full items-center justify-center relative z-20">
+                
+                <!-- ESTA ES LA ETIQUETA QUE ESTABA ROMPIENDO TODO. ¡Ya está cerrada! -->
                 <div class="absolute w-[400px] h-[400px] bg-zinc-700/10 rounded-full blur-[80px]"></div>
+                
                 <div class="deck-container">
-                    <div class="acrylic-card card-5"><img src="./acrilico5.png" class="w-4/5 object-contain" alt="Diseño 5"></div>
-                    <div class="acrylic-card card-4"><img src="./acrilico4.png" class="w-4/5 object-contain" alt="Diseño 4"></div>
-                    <div class="acrylic-card card-3"><img src="./acrilico3.png" class="w-4/5 object-contain" alt="Diseño 3"></div>
-                    <div class="acrylic-card card-2"><img src="./acrilico2.png" class="w-4/5 object-contain" alt="Diseño 2"></div>
+                    <div class="acrylic-card card-5"><img src="./acrilico5.png" class="w-4/5 object-contain" alt=""></div>
+                    <div class="acrylic-card card-4"><img src="./acrilico4.png" class="w-4/5 object-contain" alt=""></div>
+                    <div class="acrylic-card card-3"><img src="./acrilico3.png" class="w-4/5 object-contain" alt=""></div>
+                    <div class="acrylic-card card-2"><img src="./acrilico2.png" class="w-4/5 object-contain" alt=""></div>
                     <div class="acrylic-card card-1">
-                        <img src="./acrilico1.png" class="w-4/5 h-auto object-contain" alt="Acrílico Principal">
+                        <img src="./acrilico1.png" class="w-4/5 h-auto object-contain" alt="">
                         <svg class="w-12 h-12 text-zinc-300 absolute" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4m16 0a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
                     </div>
                 </div>
@@ -303,103 +306,96 @@
 
        <!-- 6. COTIZACIÓN (Estilo Fragment) -->
         <section id="cotizacion" class="py-32 px-6 relative z-10 border-t border-white/5 bg-[#050505]">
-            <div class="max-w-7xl mx-auto w-full">
+    <div class="max-w-7xl mx-auto w-full">
+        
+        <!-- Encabezado y Tarjeta de Perfil -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24 items-center">
+            <div class="reveal">
+                <h2 class="text-5xl md:text-[5rem] font-light tracking-tighter text-white leading-none mb-6">
+                    ¿Listo para un<br>cambio?
+                </h2>
+                <p class="text-zinc-400 text-lg font-light max-w-md mb-10">
+                    Hacer algo puede parecer fácil. Saber qué es lo correcto, qué no lo es y por qué, requiere experiencia.
+                </p>
                 
-                <!-- Encabezado y Tarjeta de Perfil -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24 items-center">
-                    <div class="reveal">
-                        <h2 class="text-5xl md:text-[5rem] font-light tracking-tighter text-white leading-none mb-6">
-                            ¿Listo para un<br>cambio?
-                        </h2>
-                        <p class="text-zinc-400 text-lg font-light max-w-md mb-10">
-                            Hacer algo puede parecer fácil. Saber qué es lo correcto, qué no lo es y por qué, requiere experiencia.
-                        </p>
-                        
-                       <!-- Tarjeta de Perfil -->
-                        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 max-w-lg hover:border-white/10 transition-colors">
-                            <div class="w-16 h-16 rounded-full bg-zinc-800 flex-shrink-0 border border-white/10 overflow-hidden flex items-center justify-center">
-                                <!-- Tu nueva foto real con guayabera -->
-                                <img src="./perfil_guayabera.png" alt="Diego - IA MAKERS" class="w-full h-full object-cover">
-                            </div>
-                            <p class="text-sm font-light text-zinc-400 text-center sm:text-left">
-                                Estoy disponible para proyectos enfocados, colaboraciones continuas y desarrollo tecnológico de hardware NFC y PWAs.
-                            </p>
-                        </div> 
+               <!-- Tarjeta de Perfil -->
+                <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 max-w-lg hover:border-white/10 transition-colors">
+                    <div class="w-16 h-16 rounded-full bg-zinc-800 flex-shrink-0 border border-white/10 overflow-hidden flex items-center justify-center">
+                        <img src="./perfil_guayabera.png" alt="Diego - IA MAKERS" class="w-full h-full object-cover">
                     </div>
+                    <p class="text-sm font-light text-zinc-400 text-center sm:text-left">
+                        Estoy disponible para proyectos enfocados, colaboraciones continuas y desarrollo tecnológico de hardware NFC y PWAs.
+                    </p>
+                </div> 
+            </div>
 
-                    <!-- Gráfico 3D de acompañamiento en Cotización -->
-                    <div class="hidden md:flex h-[400px] items-center justify-center relative reveal" style="transition-delay: 200ms;">
-                        <div id="scene-3d-contact" class="deck-container scale-75 opacity-50">
-                            <!-- Usa las mismas imágenes numeradas que en el Hero -->
-                            <div class="acrylic-card card-3"><img src="./acrilico3.png" class="w-4/5 object-contain" alt=""></div>
-                            <div class="acrylic-card card-1"><img src="./acrilico1.png" class="w-4/5 object-contain" alt=""></div>
-                        </div>
-                    </div>
-                            <div class="acrylic-card card-3"><img src="./acrilico.png" class="w-4/5 object-contain" alt=""></div>
-                            <div class="acrylic-card card-1"><img src="./acrilico.png" class="w-4/5 object-contain" alt=""></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Formulario en Grid -->
-                <div class="reveal pt-12 border-t border-white/5">
-                    <h3 class="text-3xl md:text-4xl font-light tracking-tighter text-white mb-10">Inicia tu cotización</h3>
-                    
-                    <form id="whatsapp-form" class="max-w-4xl" onsubmit="event.preventDefault(); enviarWhatsApp();">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <input type="text" id="cliente-nombre" required class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Nombre completo">
-                            
-                            <input type="text" id="cliente-empresa" class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Empresa o negocio">
-                            
-                            <input type="email" id="cliente-email" class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Correo electrónico">
-                            
-                            <div class="relative">
-                                <select id="servicio" required class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 appearance-none font-light">
-                                    <option value="" disabled selected>Servicio de interés...</option>
-                                    <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
-                                    <option value="Acrílicos NFC / QR">Acrílicos NFC / QR</option>
-                                    <option value="Streetwear & Custom">Streetwear & Custom</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-zinc-600">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <textarea id="cliente-detalles" rows="5" required class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light resize-none" placeholder="¿Cómo te podemos ayudar?"></textarea>
-                        </div>
-
-                        <div class="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-6">
-                            <p class="text-zinc-600 text-xs font-light max-w-sm">
-                                Tus datos serán procesados para responder a tu cotización. Serás redirigido a WhatsApp.
-                            </p>
-                            <button type="submit" class="bg-white text-black px-8 py-4 rounded-xl text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-all w-full md:w-auto">
-                                Enviar Mensaje
-                            </button>
-                        </div>
-                    </form>
-                    
-                    <div class="mt-16 flex flex-col sm:flex-row gap-10 md:gap-16 border-t border-white/5 pt-10">
-                        <div>
-                            <p class="text-zinc-500 font-light text-xs uppercase tracking-widest mb-3">¿Prefieres email?</p>
-                            <a href="mailto:iamakersdj@gmail.com" class="text-white text-xl font-light underline decoration-zinc-800 underline-offset-8 hover:decoration-white transition-colors">
-                                iamakersdj@gmail.com
-                            </a>
-                        </div>
-                        <div>
-                            <p class="text-zinc-500 font-light text-xs uppercase tracking-widest mb-3">¿Atención directa?</p>
-                            <a href="https://wa.me/529982145011" target="_blank" class="text-white text-xl font-light underline decoration-zinc-800 underline-offset-8 hover:decoration-white transition-colors flex items-center gap-3 w-fit">
-                                +52 998 214 5011
-                                <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                    </div>
+            <!-- Gráfico 3D de acompañamiento en Cotización -->
+            <div class="hidden md:flex h-[400px] items-center justify-center relative reveal" style="transition-delay: 200ms;">
+                <div id="scene-3d-contact" class="deck-container scale-75 opacity-50">
+                    <div class="acrylic-card card-3"><img src="./acrilico3.png" class="w-4/5 object-contain" alt=""></div>
+                    <div class="acrylic-card card-1"><img src="./acrilico1.png" class="w-4/5 object-contain" alt=""></div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Formulario en Grid -->
+        <div class="reveal pt-12 border-t border-white/5">
+            <h3 class="text-3xl md:text-4xl font-light tracking-tighter text-white mb-10">Inicia tu cotización</h3>
+            
+            <form id="whatsapp-form" class="max-w-4xl" onsubmit="event.preventDefault(); enviarWhatsApp();">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input type="text" id="cliente-nombre" required class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Nombre completo">
+                    
+                    <input type="text" id="cliente-empresa" class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Empresa o negocio">
+                    
+                    <input type="email" id="cliente-email" class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light" placeholder="Correo electrónico">
+                    
+                    <div class="relative">
+                        <select id="servicio" required class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 appearance-none font-light">
+                            <option value="" disabled selected>Servicio de interés...</option>
+                            <option value="Desarrollo Web (PWAs)">Desarrollo Web (PWAs)</option>
+                            <option value="Acrílicos NFC / QR">Acrílicos NFC / QR</option>
+                            <option value="Streetwear & Custom">Streetwear & Custom</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-zinc-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <textarea id="cliente-detalles" rows="5" required class="w-full bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-zinc-500 font-light resize-none" placeholder="¿Cómo te podemos ayudar?"></textarea>
+                </div>
+
+                <div class="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-6">
+                    <p class="text-zinc-600 text-xs font-light max-w-sm">
+                        Tus datos serán procesados para responder a tu cotización. Serás redirigido a WhatsApp.
+                    </p>
+                    <button type="submit" class="bg-white text-black px-8 py-4 rounded-xl text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-all w-full md:w-auto">
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </form>
+            
+            <div class="mt-16 flex flex-col sm:flex-row gap-10 md:gap-16 border-t border-white/5 pt-10">
+                <div>
+                    <p class="text-zinc-500 font-light text-xs uppercase tracking-widest mb-3">¿Prefieres email?</p>
+                    <a href="mailto:iamakersdj@gmail.com" class="text-white text-xl font-light underline decoration-zinc-800 underline-offset-8 hover:decoration-white transition-colors">
+                        iamakersdj@gmail.com
+                    </a>
+                </div>
+                <div>
+                    <p class="text-zinc-500 font-light text-xs uppercase tracking-widest mb-3">¿Atención directa?</p>
+                    <a href="https://wa.me/529982145011" target="_blank" class="text-white text-xl font-light underline decoration-zinc-800 underline-offset-8 hover:decoration-white transition-colors flex items-center gap-3 w-fit">
+                        +52 998 214 5011
+                        <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     </main>
 
     <!-- SCRIPTS -->
