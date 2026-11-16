@@ -173,15 +173,15 @@
 
                 <div id="scene-3d" class="hidden md:flex h-[600px] w-full items-center justify-center relative z-10">
                     <div class="absolute w-[400px] h-[400px] bg-zinc-700/10 rounded-full blur-[80px]"></div>
-                    <div class="deck-container">
-                        <!-- Reemplaza acrilico.png con tu foto real sin fondo -->
-                        <div class="acrylic-card card-5"><img src="./acrilico.png" class="w-4/5 object-contain opacity-20" alt=""></div>
-                        <div class="acrylic-card card-4"><img src="./acrilico.png" class="w-4/5 object-contain opacity-40" alt=""></div>
-                        <div class="acrylic-card card-3"><img src="./acrilico.png" class="w-4/5 object-contain opacity-60" alt=""></div>
-                        <div class="acrylic-card card-2"><img src="./acrilico.png" class="w-4/5 object-contain opacity-80" alt=""></div>
+                   <div class="deck-container">
+                        <!-- Las 5 tarjetas ahora llaman a 5 imágenes diferentes -->
+                        <div class="acrylic-card card-5"><img src="./acrilico5.png" class="w-4/5 object-contain opacity-20" alt="Diseño 5"></div>
+                        <div class="acrylic-card card-4"><img src="./acrilico4.png" class="w-4/5 object-contain opacity-40" alt="Diseño 4"></div>
+                        <div class="acrylic-card card-3"><img src="./acrilico3.png" class="w-4/5 object-contain opacity-60" alt="Diseño 3"></div>
+                        <div class="acrylic-card card-2"><img src="./acrilico2.png" class="w-4/5 object-contain opacity-80" alt="Diseño 2"></div>
                         <div class="acrylic-card card-1">
-                            <img src="./acrilico.png" class="w-4/5 h-auto object-contain" alt="Acrílico NFC IA Makers" onerror="this.style.display='none'">
-                            <!-- Ícono falso en caso de que la imagen no cargue -->
+                            <!-- Esta es la principal (al frente) -->
+                            <img src="./acrilico1.png" class="w-4/5 h-auto object-contain" alt="Acrílico NFC Principal" onerror="this.style.display='none'">
                             <svg class="w-12 h-12 text-zinc-300 absolute" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4m16 0a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
                         </div>
                     </div>
